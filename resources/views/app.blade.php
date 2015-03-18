@@ -20,6 +20,9 @@
     <!-- Carousel CSS -->
     <link href="{{ asset('css/carousel.css') }}" rel="stylesheet">
 
+    <!-- Welcome page CSS -->
+    <link href="{{ asset('css/heroic-features.css') }}" rel="stylesheet">
+
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
@@ -56,7 +59,7 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+								<li><a href="{{ url('/auth/logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 							</ul>
 						</li>
 					@endif
