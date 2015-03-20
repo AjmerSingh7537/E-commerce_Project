@@ -14,14 +14,8 @@
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="{{ asset('css/shop-homepage.css') }}" rel="stylesheet">
-
     <!-- Carousel CSS -->
     <link href="{{ asset('css/carousel.css') }}" rel="stylesheet">
-
-    <!-- Welcome page CSS -->
-    <link href="{{ asset('css/heroic-features.css') }}" rel="stylesheet">
 
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -57,9 +51,12 @@
 						<li><a href="{{ url('/auth/register') }}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 					@else
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{ Auth::user()->name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="{{ url('/auth/logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                                <li><a href="{{ url('#') }}"><span class="glyphicon glyphicon-user"></span> User Profile</a></li>
+                                <li><a href="{{ url('#') }}"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{{ url('/auth/logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 							</ul>
 						</li>
 					@endif
@@ -69,11 +66,9 @@
 	</nav>
 
 	@yield('content')
-
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-
 
 </body>
 </html>
