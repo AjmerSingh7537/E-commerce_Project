@@ -33,4 +33,14 @@ class WelcomeController extends Controller {
 		return view('welcome');
 	}
 
+    public function productDetails()
+    {
+        return view('product_details');
+    }
+
+    public function addProduct()
+    {
+        return view('add_product');
+    }
+
 }

@@ -15,10 +15,12 @@ class CreateCartDetailsTable extends Migration {
 		Schema::create('cart_details', function(Blueprint $table)
         {
             $table->increments('cart_detail_id');
-            $table->integer('cart_id');
-            $table->integer('product_id');
+            $table->unsignedInteger('cart_id');
+            $table->unsignedInteger('product_id');
             $table->integer('quantity');
             $table->timestamp('created_at');
+            $table->foreign('cart_id')->references('cart_id')->on('cart');
+            $table->foreign('product_id')->references('product_id')->on('products');
         });
 	}
 
