@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAnonymousUsersTable extends Migration {
+class CreateCategoriesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,12 @@ class CreateAnonymousUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('anonymous_users', function(Blueprint $table)
-        {
-            $table->increments('anonymous_id');
-            $table->string('random_string');
-        });
+		Schema::create('categories', function(Blueprint $table)
+		{
+			$table->increments('category_id');
+            $table->string('category_name');
+			$table->timestamps('created_at');
+		});
 	}
 
 	/**
@@ -26,7 +27,7 @@ class CreateAnonymousUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('anonymous_users');
+		Schema::drop('categories');
 	}
 
 }

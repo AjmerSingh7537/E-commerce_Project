@@ -26,8 +26,6 @@ class AddProductRequest extends Request {
             'description' => 'required',
             'price' => 'required|numeric',
             'image_path' => 'required',
-            'rating_cache' => 'required|numeric',
-            'rating_count' => 'required|integer'
 		];
 	}
 

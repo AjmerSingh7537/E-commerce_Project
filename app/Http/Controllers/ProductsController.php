@@ -36,7 +36,6 @@ class ProductsController extends Controller {
 	public function store(AddProductRequest $request, Products $products)
 	{
         $products->create($request->all());
-
         return redirect()->route('products_path');
 	}
 

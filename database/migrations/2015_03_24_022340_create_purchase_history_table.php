@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductsTable extends Migration {
+class CreatePurchaseHistoryTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateProductsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('products', function(Blueprint $table)
+		Schema::create('purchase_history', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->timestamps();
@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('products');
+		Schema::drop('purchase_history');
 	}
 
 }

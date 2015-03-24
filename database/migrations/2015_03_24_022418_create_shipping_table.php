@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTypeTable extends Migration {
+class CreateShippingTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,11 @@ class CreateUsersTypeTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('users_type', function(Blueprint $table)
-        {
-            $table->increments('type_id');
-            $table->string('user_type');
-        });
+		Schema::create('shipping', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->timestamps();
+		});
 	}
 
 	/**
@@ -26,7 +26,7 @@ class CreateUsersTypeTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users_type');
+		Schema::drop('shipping');
 	}
 
 }

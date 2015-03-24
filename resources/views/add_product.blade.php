@@ -26,16 +26,6 @@
                     {!! Form::file('image_path', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('image_path', '<span class="help-block">:message</span>') !!}
                 </div>
-                <div class="form-group {{ $errors->has('rating_cache') ? 'has-error' : '' }}">
-                    {!! Form::label('rating_cache', 'Rating Cache:') !!}
-                    {!! Form::text('rating_cache', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('rating_cache', '<span class="help-block">:message</span>') !!}
-                </div>
-                <div class="form-group {{ $errors->has('rating_count') ? 'has-error' : '' }}">
-                    {!! Form::label('rating_count', 'Rating Count:') !!}
-                    {!! Form::text('rating_count', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('rating_count', '<span class="help-block">:message</span>') !!}
-                </div>
                 <div class="form-group">
                     {!! Form::submit('Add Product', null, ['class' => 'btn btn-default']) !!}
                 </div>
