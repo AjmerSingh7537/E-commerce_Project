@@ -20,7 +20,9 @@ Route::resource('products', 'ProductsController', [
     'names' => [
         'index' => 'products_path',
         'show' => 'product_path',
-        'create' => 'add_product_path'
+        'create' => 'add_product_path',
+        'update' => 'update_product',
+        'edit' => 'edit_product'
     ]
 ]);
 

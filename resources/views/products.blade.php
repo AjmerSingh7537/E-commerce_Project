@@ -12,10 +12,10 @@
                 @foreach($products as $product)
                     <div class="col-sm-6 col-lg-3 col-md-4">
                         <div class="thumbnail">
-                            <img src="img/products/{{ $product->image_path }}" alt="">
+                            <img src="img/products/{{ $product->image }}" alt="">
                             <div class="caption">
                                 <h4 class="pull-right">${{ $product->price }}</h4>
-                                <h4><a href="#">{{ $product->product_name }}</a>
+                                <h4><a href="{{ route('product_path', $product->id) }}">{{ $product->product_name }}</a>
                                 </h4>
                                 <p>{{ $product->description }}</p>
                             </div>

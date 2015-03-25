@@ -14,7 +14,7 @@ class CreateOrderTable extends Migration {
 	{
         Schema::create('order', function(Blueprint $table)
         {
-            $table->increments('order_id');
+            $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->integer('total_quantity');
             $table->float('total_balance');

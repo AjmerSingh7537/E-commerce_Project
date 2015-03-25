@@ -15,7 +15,7 @@ class ProductsController extends Controller {
 	public function index()
 	{
         $products = DB::table('products')->get();
-		return view('home', ['products' => $products]);
+		return view('products', ['products' => $products]);
 	}
 
 	/**
@@ -47,7 +47,8 @@ class ProductsController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		$product = DB::table('products')->find($id);
+        return view('product_details', ['product' => $product]);
 	}
 
 	/**
@@ -58,7 +59,8 @@ class ProductsController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$product = DB::table('products')->find($id);
+        return view('edit_product', ['product' => $product]);
 	}
 
 	/**
@@ -67,9 +69,16 @@ class ProductsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, Products $pro, AddProductRequest $req)
 	{
-		//
+        //dd(\Request::get('product_name'));
+//        $pro = $this->pro->find($id);
+//        $pro->product_name = $req->input('product_name');
+//        $pro->save();
+        //$pro->update($req->input());
+        //$product = DB::table('products')->find($id);
+        //return redirect('products');
+        return $id;
 	}
 
 	/**

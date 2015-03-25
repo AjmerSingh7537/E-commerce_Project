@@ -14,14 +14,14 @@ class CreateReviewsTable extends Migration {
 	{
 		Schema::create('reviews', function(Blueprint $table)
         {
-            $table->increments('review_id');
+            $table->increments('id');
             $table->unsignedInteger('product_id');
             $table->unsignedInteger('user_id');
             $table->string('comment', 500);
             $table->tinyInteger('approved');
             $table->tinyInteger('spam');
             $table->timestamps();
-            $table->foreign('product_id')->references('product_id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('user_id')->references('id')->on('users');
         });
 	}
