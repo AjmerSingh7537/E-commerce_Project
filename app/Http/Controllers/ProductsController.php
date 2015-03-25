@@ -35,7 +35,16 @@ class ProductsController extends Controller {
 	 */
 	public function store(AddProductRequest $request, Products $products)
 	{
-        $products->create($request->all());
+        $data = $request->all();
+        $ext = $request->file('image')->getClientOriginalExtension();
+        $filename = uniqid() . "." . $ext;
+        $request->file('image')->move('img/products/', $filename);
+        $products->product_name = $data['product_name'];
+        $products->description = $data['description'];
+        $products->price = $data['price'];
+        $products->image = $filename;
+        $products->slug = $data['slug'];
+        $products->save();
         return redirect()->route('products_path');
 	}
 

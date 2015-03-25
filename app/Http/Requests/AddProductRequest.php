@@ -25,7 +25,8 @@ class AddProductRequest extends Request {
 			'product_name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'image' => 'required',
+            'image' => 'required|image|mimes:jpeg,bmp,png',
+            'slug' => 'required|unique:products',
 		];
 	}
 

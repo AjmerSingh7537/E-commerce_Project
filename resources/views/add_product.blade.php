@@ -18,7 +18,7 @@
                             </div>
                         @endif
 
-                        {!! Form::open(['route' => 'products.store', 'class' => 'form-horizontal']) !!}
+                        {!! Form::open(['route' => 'products.store', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
                             <div class="form-group">
                                 {!! Form::label('product_name', 'Product Name', ['class' => 'col-md-4 control-label']) !!}
                                 <div class="col-md-6">
@@ -35,6 +35,12 @@
                                 {!! Form::label('price', 'Price', ['class' => 'col-md-4 control-label']) !!}
                                 <div class="col-md-6">
                                     {!! Form::text('price', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('slug', 'Slug', ['class' => 'col-md-4 control-label']) !!}
+                                <div class="col-md-6">
+                                    {!! Form::text('slug', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
                             <div class="form-group">
