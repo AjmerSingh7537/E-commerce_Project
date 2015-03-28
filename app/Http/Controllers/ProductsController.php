@@ -85,13 +85,21 @@ class ProductsController extends Controller {
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  int  $id
+	 * @param  $slug
      * @param $request
 	 * @return Response
 	 */
-	public function update($id, AddProductRequest $request)
+	public function update($slug, AddProductRequest $request)
 	{
-        return $id;
+        $product = $this->product->whereSlug($slug)->first();
+        $data = $request->all();
+        $product->product_name = $data['product_name'];
+        $product->description = $data['description'];
+        $product->price = $data['price'];
+        //$this->product->image = $filename;
+        //$this->product->slug = $data['slug'];
+        $product->save();
+        return redirect()->route('products_path');
 	}
 
 	/**

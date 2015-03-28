@@ -2,7 +2,7 @@
 
 use App\Http\Requests\Request;
 
-class AddProductRequest extends Request {
+class AddCategoryRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -22,10 +22,7 @@ class AddProductRequest extends Request {
 	public function rules()
 	{
 		return [
-			'product_name' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric',
-            'slug' => 'required|unique:products',
+			'category_name' => 'required|unique:categories'
 		];
 	}
 

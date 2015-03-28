@@ -8,7 +8,7 @@
                     <div class="panel-heading">Update Product</div>
                     <div class="panel-body">
                         @include('includes/_errorMessages')
-                        {!! Form::model($product, ['route' => 'update_product', 'method' => 'PATCH', 'class' => 'form-horizontal']) !!}
+                        {!! Form::model($product, ['route' => ['update_product', $product->slug], 'method' => 'PATCH', 'class' => 'form-horizontal']) !!}
                             @include('includes/_productForm')
                         {!! Form::close() !!}
                     </div>

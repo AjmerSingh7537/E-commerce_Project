@@ -25,6 +25,10 @@ Route::resource('products', 'ProductsController', [
     ]
 ]);
 
+Route::resource('categories', 'CategoriesController', [
+    'except' => ['show']
+]);
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
