@@ -15,7 +15,7 @@
                             <img src="img/products/{{ $product->image }}" alt="">
                             <div class="caption">
                                 <h4 class="pull-right">${{ $product->price }}</h4>
-                                <h4><a href="{{ route('product_path', $product->id) }}">{{ $product->product_name }}</a>
+                                <h4><a href="{{ route('product_path', $product->slug) }}">{{ $product->product_name }}</a>
                                 </h4>
                                 <p>{{ $product->description }}</p>
                             </div>

@@ -7,7 +7,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Reset Password</div>
 				<div class="panel-body">
-                    @include('_errorMessages')
+                    @include('includes/_errorMessages')
 
 					<form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">

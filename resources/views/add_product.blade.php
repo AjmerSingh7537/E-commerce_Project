@@ -7,9 +7,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Add Product</div>
                     <div class="panel-body">
-                        @include('_errorMessages')
+                        @include('includes/_errorMessages')
                         {!! Form::open(['route' => 'products.store', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
-                            @include('_productForm')
+                            @include('includes/_productForm')
                         {!! Form::close() !!}
                     </div>
                 </div>

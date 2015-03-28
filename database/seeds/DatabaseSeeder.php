@@ -12,9 +12,23 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		Model::unguard();
+		//Model::unguard();
 
-		// $this->call('UserTableSeeder');
+		$this->call('UsersTypeTableSeeder');
+        Model::unguard();
 	}
 
+}
+
+class UsersTypeTableSeeder extends Seeder {
+
+    public function run(){
+        DB::table('users_type')->delete();
+
+        DB::table('users_type')->insert([
+            ['user_type' => 'regular'],
+            ['user_type' => 'admin'],
+            ['user_type' => 'banned'],
+        ]);
+    }
 }

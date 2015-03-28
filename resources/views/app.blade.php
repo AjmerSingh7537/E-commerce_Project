@@ -42,8 +42,9 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+					<li><a href="{{ url('/') }}"> Home</a></li>
                     <li><a href="{{ route('products_path') }}">Products</a></li>
+                    <li><a href="{{ route('add_product_path') }}">Add</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

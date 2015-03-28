@@ -3,10 +3,19 @@
 use App\Http\Requests;
 use App\Http\Requests\AddProductRequest;
 use App\Products;
-use DB;
 
 class ProductsController extends Controller {
 
+
+    private $product;
+
+    /**
+     * @param Products $product
+     */
+    public function __construct(Products $product)
+    {
+        $this->product = $product;
+    }
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -14,7 +23,7 @@ class ProductsController extends Controller {
 	 */
 	public function index()
 	{
-        $products = DB::table('products')->get();
+        $products = $this->product->get();
 		return view('products', ['products' => $products]);
 	}
 
@@ -31,44 +40,45 @@ class ProductsController extends Controller {
 	/**
 	 * Store a newly created resource in storage.
 	 *
+     * @param $request
 	 * @return Response
 	 */
-	public function store(AddProductRequest $request, Products $products)
+	public function store(AddProductRequest $request)
 	{
         $data = $request->all();
         $ext = $request->file('image')->getClientOriginalExtension();
         $filename = uniqid() . "." . $ext;
         $request->file('image')->move('img/products/', $filename);
-        $products->product_name = $data['product_name'];
-        $products->description = $data['description'];
-        $products->price = $data['price'];
-        $products->image = $filename;
-        $products->slug = $data['slug'];
-        $products->save();
+        $this->product->product_name = $data['product_name'];
+        $this->product->description = $data['description'];
+        $this->product->price = $data['price'];
+        $this->product->image = $filename;
+        $this->product->slug = $data['slug'];
+        $this->product->save();
         return redirect()->route('products_path');
 	}
 
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  $slug
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($slug)
 	{
-		$product = DB::table('products')->find($id);
+        $product = $this->product->whereSlug($slug)->first();
         return view('product_details', ['product' => $product]);
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  $slug
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($slug)
 	{
-		$product = DB::table('products')->find($id);
+        $product = $this->product->whereSlug($slug)->first();
         return view('edit_product', ['product' => $product]);
 	}
 
@@ -76,17 +86,11 @@ class ProductsController extends Controller {
 	 * Update the specified resource in storage.
 	 *
 	 * @param  int  $id
+     * @param $request
 	 * @return Response
 	 */
-	public function update($id, Products $pro, AddProductRequest $req)
+	public function update($id, AddProductRequest $request)
 	{
-        //dd(\Request::get('product_name'));
-//        $pro = $this->pro->find($id);
-//        $pro->product_name = $req->input('product_name');
-//        $pro->save();
-        //$pro->update($req->input());
-        //$product = DB::table('products')->find($id);
-        //return redirect('products');
         return $id;
 	}
 
