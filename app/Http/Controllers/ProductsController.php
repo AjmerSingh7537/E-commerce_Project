@@ -6,7 +6,6 @@ use App\Products;
 
 class ProductsController extends Controller {
 
-
     private $product;
 
     /**
@@ -61,37 +60,34 @@ class ProductsController extends Controller {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  $slug
+	 * @param  $product
 	 * @return Response
 	 */
-	public function show($slug)
+	public function show(Products $product)
 	{
-        $product = $this->product->whereSlug($slug)->first();
         return view('product_details', ['product' => $product]);
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  $slug
+	 * @param  $product
 	 * @return Response
 	 */
-	public function edit($slug)
+	public function edit(Products $product)
 	{
-        $product = $this->product->whereSlug($slug)->first();
         return view('edit_product', ['product' => $product]);
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  $slug
+	 * @param  $product
      * @param $request
 	 * @return Response
 	 */
-	public function update($slug, AddProductRequest $request)
+	public function update(Products $product, AddProductRequest $request)
 	{
-        $product = $this->product->whereSlug($slug)->first();
         $data = $request->all();
         $product->product_name = $data['product_name'];
         $product->description = $data['description'];
@@ -105,12 +101,11 @@ class ProductsController extends Controller {
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  int  $id
+	 * @param  $product
 	 * @return Response
 	 */
-	public function destroy($slug)
+	public function destroy(Products $product)
 	{
-        $product = $this->product->whereSlug($slug)->first();
         $product->delete();
         return redirect()->route('products_path');
 	}

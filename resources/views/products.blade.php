@@ -29,11 +29,7 @@
                                     <span class="glyphicon glyphicon-star"></span>
                                 </p>
                             </div>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['products.destroy', $product->slug] ]) !!}
-                                <div class="form-group">
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                </div>
-                            {!! Form::close() !!}
+                            {!! delete_form(['products.destroy', $product->slug]) !!}
                         </div>
                     </div>
                 @endforeach

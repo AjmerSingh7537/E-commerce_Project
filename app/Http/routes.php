@@ -11,6 +11,11 @@
 |
 */
 
+Route::bind('products', function($slug)
+{
+    return App\Products::whereSlug($slug)->first();
+});
+
 Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');

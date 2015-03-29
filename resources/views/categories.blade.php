@@ -36,11 +36,7 @@
                                     <td>{{ $category->id }}</td>
                                     <td>{{ $category->category_name }}</td>
                                     <td>
-                                        {!! Form::open(['method' => 'DELETE', 'route' => ['categories.destroy', $category->id] ]) !!}
-                                        <div class="form-group">
-                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                        </div>
-                                        {!! Form::close() !!}
+                                        {!! delete_form(['categories.destroy', $category->id]) !!}
                                     </td>
                                 </tr>
                                 @endforeach
