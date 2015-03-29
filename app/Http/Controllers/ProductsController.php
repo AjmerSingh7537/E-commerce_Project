@@ -108,9 +108,11 @@ class ProductsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($slug)
 	{
-		//
+        $product = $this->product->whereSlug($slug)->first();
+        $product->delete();
+        return redirect()->route('products_path');
 	}
 
 }

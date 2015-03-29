@@ -28,10 +28,10 @@ class CategoriesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
-	{
-		//
-	}
+//	public function create()
+//	{
+//		//
+//	}
 
 	/**
 	 * Store a newly created resource in storage.
@@ -52,10 +52,10 @@ class CategoriesController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
-	{
-		//
-	}
+//	public function show($id)
+//	{
+//		//
+//	}
 
 	/**
 	 * Show the form for editing the specified resource.
@@ -87,7 +87,9 @@ class CategoriesController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		$category = $this->category->where('id', $id);
+        $category->delete();
+        return redirect()->route('categories.index');
 	}
 
 }
