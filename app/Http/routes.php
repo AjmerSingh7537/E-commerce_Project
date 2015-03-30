@@ -31,7 +31,7 @@ Route::resource('products', 'ProductsController', [
 ]);
 
 Route::resource('categories', 'CategoriesController', [
-    'except' => ['show']
+    'only' => ['index', 'store', 'destroy']
 ]);
 
 

@@ -3,9 +3,10 @@
 @section('content')
     <!-- Page Content -->
     <div class="container">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12 col-md-offset-0">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="caption col-lg-12">
+                    <h1><a href="{{ route('add_product_path') }}" class=" pull-right btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add</a></h1>
                     <h1>List of Products</h1>
                 </div>
 
@@ -29,7 +30,11 @@
                                     <span class="glyphicon glyphicon-star"></span>
                                 </p>
                             </div>
-                            {!! delete_form(['products.destroy', $product->slug]) !!}
+                            <div class="caption">
+                                <a href="{{ route('edit_product', $product->slug) }}" class=" pull-right btn btn-primary">
+                                    <span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                {!! delete_form(['products.destroy', $product->slug]) !!}
+                            </div>
                         </div>
                     </div>
                 @endforeach

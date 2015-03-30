@@ -45,17 +45,35 @@ class ProductsController extends Controller {
 	public function store(AddProductRequest $request)
 	{
         $data = $request->all();
-        $ext = $request->file('image')->getClientOriginalExtension();
-        $filename = uniqid() . "." . $ext;
-        $request->file('image')->move('img/products/', $filename);
-        $this->product->product_name = $data['product_name'];
-        $this->product->description = $data['description'];
-        $this->product->price = $data['price'];
-        $this->product->image = $filename;
-        $this->product->slug = $data['slug'];
-        $this->product->save();
+        $data['image'] = $this->imageModifier($request, $data);
+        $this->sameValues($data, $this->product);
         return redirect()->route('products_path');
 	}
+
+    private function sameValues($data, $product)
+    {
+        $product->product_name = $data['product_name'];
+        $product->description = $data['description'];
+        $product->price = $data['price'];
+        $product->slug = $data['slug'];
+        if((!empty($product->image)) && $product->image !== 'default.jpg'){
+            unlink('img/products/' . $product->image);
+        }
+        $product->image = $data['image'];
+        $product->save();
+    }
+
+    private function imageModifier($request, $data)
+    {
+        if(empty($data['image'])){
+            $filename = 'default.jpg';
+        }else{
+            $ext = $request->file('image')->getClientOriginalExtension();
+            $filename = uniqid() . "." . $ext;
+            $request->file('image')->move('img/products/', $filename);
+        }
+        return $filename;
+    }
 
 	/**
 	 * Display the specified resource.
@@ -89,12 +107,8 @@ class ProductsController extends Controller {
 	public function update(Products $product, AddProductRequest $request)
 	{
         $data = $request->all();
-        $product->product_name = $data['product_name'];
-        $product->description = $data['description'];
-        $product->price = $data['price'];
-        //$this->product->image = $filename;
-        //$this->product->slug = $data['slug'];
-        $product->save();
+        $data['image'] = $this->imageModifier($request, $data);
+        $this->sameValues($data, $product);
         return redirect()->route('products_path');
 	}
 
@@ -106,7 +120,11 @@ class ProductsController extends Controller {
 	 */
 	public function destroy(Products $product)
 	{
+        $filename = $product->image;
         $product->delete();
+        if($filename !== 'default.jpg'){
+            unlink('img/products/' . $filename);
+        }
         return redirect()->route('products_path');
 	}
 
