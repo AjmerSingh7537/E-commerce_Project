@@ -13,12 +13,11 @@ class RedirectIfAuthenticated {
 	 */
 	protected $auth;
 
-	/**
-	 * Create a new filter instance.
-	 *
-	 * @param  Guard  $auth
-	 * @return void
-	 */
+    /**
+     * Create a new filter instance.
+     *
+     * @param  Guard $auth
+     */
 	public function __construct(Guard $auth)
 	{
 		$this->auth = $auth;

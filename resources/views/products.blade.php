@@ -6,8 +6,10 @@
         <div class="col-md-12 col-md-offset-0">
             <div class="row">
                 <div class="caption col-lg-12">
-                    <h1><a href="{{ route('add_product_path') }}" class=" pull-right btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add</a></h1>
-                    <h1>List of Products</h1>
+                    @if(Auth::user() && Auth::user()->type_id === 2)
+                        <h1><a href="{{ route('add_product_path') }}" class=" pull-right btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add</a></h1>
+                    @endif
+                        <h1>List of Products</h1>
                 </div>
 
                 @foreach($products as $product)
@@ -30,11 +32,22 @@
                                     <span class="glyphicon glyphicon-star"></span>
                                 </p>
                             </div>
-                            <div class="caption">
-                                <a href="{{ route('edit_product', $product->slug) }}" class=" pull-right btn btn-primary">
-                                    <span class="glyphicon glyphicon-edit"></span> Edit</a>
-                                {!! delete_form(['products.destroy', $product->slug]) !!}
-                            </div>
+                            @if(Auth::user() && Auth::user()->type_id === 2)
+                                <div class="caption">
+                                    <a href="{{ route('edit_product', $product->slug) }}" class="pull-right btn btn-primary">
+                                        <span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                    {!! delete_form(['products.destroy', $product->slug]) !!}
+                                </div>
+                            @else
+                                <div class="caption">
+                                    {!! Form::open(['route' => 'add_to_cart']) !!}
+                                    {!! Form::hidden('product_id', $product->id) !!}
+                                    <button class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Add to Cart</button>
+                                    {{--<a class="btn btn-success">--}}
+                                        {{--<span class="glyphicon glyphicon-plus-sign"></span> Add to Cart</a>--}}
+                                    {!! Form::close() !!}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @endforeach

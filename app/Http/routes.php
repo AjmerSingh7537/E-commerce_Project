@@ -34,6 +34,16 @@ Route::resource('categories', 'CategoriesController', [
     'only' => ['index', 'store', 'destroy']
 ]);
 
+Route::resource('cart', 'CartController', [
+    'except' => ['show', 'create'],
+    'names' => [
+        'index' => 'show_cart',
+        'edit' => 'edit_cart_view',
+        'update' => 'update_cart',
+        'store' => 'add_to_cart',
+        'destroy' => 'delete_item'
+    ]
+]);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

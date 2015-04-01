@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Session;
+
 class WelcomeController extends Controller {
 
 	/*
@@ -13,11 +15,10 @@ class WelcomeController extends Controller {
 	|
 	*/
 
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
+    /**
+     * Create a new controller instance.
+     *
+     */
 	public function __construct()
 	{
 		$this->middleware('guest');

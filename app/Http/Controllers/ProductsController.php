@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Requests\AddProductRequest;
 use App\Products;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller {
 
@@ -33,7 +34,9 @@ class ProductsController extends Controller {
 	 */
 	public function create()
 	{
-		return view('add_product');
+        if(Auth::user())
+            return view('add_product');
+        return redirect()->guest('auth/login');
 	}
 
 	/**
@@ -94,7 +97,9 @@ class ProductsController extends Controller {
 	 */
 	public function edit(Products $product)
 	{
-        return view('edit_product', ['product' => $product]);
+        if(Auth::user())
+            return view('edit_product', ['product' => $product]);
+        return redirect()->guest('auth/login');
 	}
 
 	/**
