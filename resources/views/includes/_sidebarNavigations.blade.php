@@ -1,6 +1,6 @@
 {{--<div class="container">--}}
 <div class="navbar-default sidebar" role="navigation">
-    <div class="sidebar-nav navbar-collapse">
+    <div class="sidebar-nav collapse navbar-collapse">
         <ul class="nav" id="side-menu">
             <li class="sidebar-search">
                 <div class="input-group custom-search-form">
@@ -14,13 +14,13 @@
                 <!-- /input-group -->
             </li>
             <li>
-                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                <a href="#"> Dashboard</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-table fa-fw"></i> Tables</a>
+                <a href="#"> Tables</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-edit fa-fw"></i> Forms</a>
+                <a href="#"> Forms</a>
             </li>
         </ul>
     </div>

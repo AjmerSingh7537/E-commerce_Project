@@ -34,7 +34,7 @@ class ProductsController extends Controller {
 	 */
 	public function create()
 	{
-        if(Auth::user())
+        if(Auth::user() && Auth::user()->type_id === 2)
             return view('add_product');
         return redirect()->guest('auth/login');
 	}
@@ -97,7 +97,7 @@ class ProductsController extends Controller {
 	 */
 	public function edit(Products $product)
 	{
-        if(Auth::user())
+        if(Auth::user() && Auth::user()->type_id === 2)
             return view('edit_product', ['product' => $product]);
         return redirect()->guest('auth/login');
 	}

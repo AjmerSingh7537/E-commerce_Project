@@ -1,13 +1,9 @@
 @extends('app')
 
 @section('content')
-    @include('includes/_sidebarNavigations')
     <!-- Page Content -->
-    <div id="page-wrapper">
-    <div class="container-fluid">
+    <div class="container">
         <div class="col-md-12 col-md-offset-0">
-
-                {{--@include('includes/_sidebarNavigations')--}}
                 <div class="caption col-lg-12">
                     @if(Auth::user() && Auth::user()->type_id === 2)
                         <h1><a href="{{ route('add_product_path') }}" class=" pull-right btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add</a></h1>
@@ -64,5 +60,4 @@
         </div>
     </div>
     <!-- /.container -->
-    </div>
 @endsection

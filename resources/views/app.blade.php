@@ -31,7 +31,6 @@
 	<![endif]-->
 </head>
 <body>
-<div id="wrapper">
 	<nav class="navbar navbar-inverse" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -54,7 +53,8 @@
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span> Cart<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <span class="glyphicon glyphicon-shopping-cart"></span> Cart<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('#') }}"><span class="glyphicon glyphicon-trash"></span> Empty Cart</a></li>
                                 <li><a href="{{ url('#') }}"><span class="glyphicon glyphicon-eye-open"></span> View Cart</a></li>
@@ -76,10 +76,8 @@
 				</ul>
 			</div>
 		</div>
-        {{--@include('includes/_sidebarNavigations')--}}
 	</nav>
         @yield('content')
-</div>
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
