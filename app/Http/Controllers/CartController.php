@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Requests\CartRequest;
+use App\Products;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller {
@@ -13,7 +14,7 @@ class CartController extends Controller {
 	 */
 	public function index()
 	{
-		return "you are adding the following item to the cart: " . Session::get('product_id');
+		return "Product name: " . Session::get('product_name') . "\nDescription: " . Session::get('description') . "\nPrice: " . Session::get('price');
 	}
 
 	/**
@@ -32,10 +33,16 @@ class CartController extends Controller {
      * @param CartRequest $request
      * @return Response
      */
-	public function store(CartRequest $request)
+	public function store(CartRequest $request, Products $product)
 	{
-        Session::put('product_id', $request->get('product_id'));
-        return redirect()->route('show_cart');
+        $product_id = $request->get('product_id');
+        //echo $product_id;
+        $product = $product->where('id', $product_id);
+        print_r($product);
+        //Session::put('product_name', $product->product_name);
+        //Session::put('description', $product->description);
+        //Session::put('price', $product->price);
+        //return redirect()->route('show_cart');
 	}
 
 	/**

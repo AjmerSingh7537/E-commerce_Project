@@ -17,6 +17,9 @@
     <!-- Carousel CSS -->
     <link href="{{ asset('css/carousel.css') }}" rel="stylesheet">
 
+    <!-- Carousel CSS -->
+    <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
+
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
@@ -28,7 +31,8 @@
 	<![endif]-->
 </head>
 <body>
-	<nav class="navbar navbar-inverse">
+<div id="wrapper">
+	<nav class="navbar navbar-inverse" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -72,9 +76,10 @@
 				</ul>
 			</div>
 		</div>
+        {{--@include('includes/_sidebarNavigations')--}}
 	</nav>
-
-	@yield('content')
+        @yield('content')
+</div>
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>

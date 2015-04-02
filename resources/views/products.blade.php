@@ -1,10 +1,13 @@
 @extends('app')
 
 @section('content')
+    @include('includes/_sidebarNavigations')
     <!-- Page Content -->
-    <div class="container">
+    <div id="page-wrapper">
+    <div class="container-fluid">
         <div class="col-md-12 col-md-offset-0">
-            <div class="row">
+
+                {{--@include('includes/_sidebarNavigations')--}}
                 <div class="caption col-lg-12">
                     @if(Auth::user() && Auth::user()->type_id === 2)
                         <h1><a href="{{ route('add_product_path') }}" class=" pull-right btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add</a></h1>
@@ -58,8 +61,8 @@
                     <p>If you like this template, then check out <a target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this tutorial</a> on how to build a working review system for your online store!</p>
                     <a class="btn btn-primary" target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">View Tutorial</a>
                 </div>
-            </div>
         </div>
     </div>
     <!-- /.container -->
+    </div>
 @endsection
