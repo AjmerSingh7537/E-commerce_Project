@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Products;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller {
@@ -31,8 +32,9 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
+        $products = Products::all();
         if(Auth::user() && Auth::user()->type_id === 2)
-		    return view('admin/products');
+		    return view('admin/products', ['products' => $products]);
         return view('home');
 	}
 

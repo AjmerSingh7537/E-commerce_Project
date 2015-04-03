@@ -154,10 +154,10 @@
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a href="#"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a>
+                        <a href="/home">Products</a>
                     </li>
                     <li>
-                        <a href="#"><span class="glyphicon glyphicon-th"></span> Tables</a>
+                        <a href="{{ route('categories.index') }}">Categories</a>
                     </li>
                     <li>
                         <a href="#"><span class="glyphicon glyphicon-edit"></span> Forms</a>
@@ -191,7 +191,8 @@
 <script>
     $(document).ready(function() {
         $('#dataTables-example').DataTable({
-            responsive: true
+            responsive: true,
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [1] }]
         });
     });
 </script>
