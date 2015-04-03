@@ -34,8 +34,11 @@ class ProductsController extends Controller {
 	 */
 	public function create()
 	{
-        if(Auth::user() && Auth::user()->type_id === 2)
-            return view('add_product');
+        if(Auth::user()){
+            if(Auth::user()->type_id === 2)
+                return view('admin/products/add_product');
+            return redirect()->route('products_path');
+        }
         return redirect()->guest('auth/login');
 	}
 
@@ -50,7 +53,8 @@ class ProductsController extends Controller {
         $data = $request->all();
         $data['image'] = $this->imageModifier($request, $data);
         $this->sameValues($data, $this->product);
-        return redirect()->route('products_path');
+//        return redirect()->route('products_path'); // this path goes to the products list for the users
+        return redirect('home'); //this is where all the products are listed for the admin
 	}
 
     private function sameValues($data, $product)
@@ -97,8 +101,11 @@ class ProductsController extends Controller {
 	 */
 	public function edit(Products $product)
 	{
-        if(Auth::user() && Auth::user()->type_id === 2)
-            return view('edit_product', ['product' => $product]);
+        if(Auth::user()){
+            if(Auth::user()->type_id === 2)
+                return view('admin/products/edit_product', ['product' => $product]);
+            return redirect()->route('products_path');
+        }
         return redirect()->guest('auth/login');
 	}
 
@@ -114,7 +121,8 @@ class ProductsController extends Controller {
         $data = $request->all();
         $data['image'] = $this->imageModifier($request, $data);
         $this->sameValues($data, $product);
-        return redirect()->route('products_path');
+//        return redirect()->route('products_path'); // this goes to the products displayed to the user
+        return redirect('home'); //this is where all the products are listed for the admin
 	}
 
 	/**
@@ -130,7 +138,8 @@ class ProductsController extends Controller {
         if($filename !== 'default.jpg'){
             unlink('img/products/' . $filename);
         }
-        return redirect()->route('products_path');
+//        return redirect()->route('products_path'); // this goes to the products displayed to the user
+        return redirect('home'); //this is where all the products are listed for the admin
 	}
 
 }

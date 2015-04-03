@@ -34,7 +34,7 @@ class HomeController extends Controller {
 	{
         $products = Products::all();
         if(Auth::user() && Auth::user()->type_id === 2)
-		    return view('admin/products', ['products' => $products]);
+		    return view('admin/products/products', ['products' => $products]);
         return view('home');
 	}
 

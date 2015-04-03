@@ -31,7 +31,12 @@ Route::resource('products', 'ProductsController', [
 ]);
 
 Route::resource('categories', 'CategoriesController', [
-    'only' => ['index', 'store', 'destroy']
+    'only' => ['index', 'store', 'destroy'],
+    'names' => [
+        'index' => 'categories',
+        'store' => 'add_category',
+        'destroy' => 'delete_category'
+    ]
 ]);
 
 Route::resource('cart', 'CartController', [

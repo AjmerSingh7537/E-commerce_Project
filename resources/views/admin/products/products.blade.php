@@ -1,15 +1,18 @@
-@extends('admin/master')
+@extends('admin.master')
 
 @section('content')
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Products</h1>
+            <div class="caption">
+                <h1><a href="{{ route('add_product_path') }}" class=" pull-right btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add</a></h1>
+                <h1 class="page-header">List of Products</h1>
+            </div>
         </div>
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="min-width: 640px;">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     List of all the products
@@ -25,6 +28,7 @@
                                 <th>Product Name</th>
                                 <th>Description</th>
                                 <th>Price</th>
+                                <th>Options</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -32,11 +36,18 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>
-                                    <img src="img/products/{{ $product->image }}" alt="{{ $product->slug }}" style="width:100px;height: 70px;">
+                                    <img src="img/products/{{ $product->image }}" alt="{{ $product->slug }}" style="width:100px;height: ">
                                 </td>
                                 <td>{{ $product->product_name }}</td>
                                 <td>{{ $product->description }}</td>
                                 <td>{{ $product->price }}</td>
+                                <td>
+
+                                        <a href="{{ route('edit_product', $product->slug) }}" class="btn btn-primary btn-xs">
+                                            <span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                        {!! delete_form(['products.destroy', $product->slug]) !!}
+
+                                </td>
                             </tr>
                             @endforeach
                             </tbody>

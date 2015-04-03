@@ -38,7 +38,8 @@ class CartController extends Controller {
         $product_id = $request->get('product_id');
         //echo $product_id;
         $product = $product->where('id', $product_id);
-        print_r($product);
+        return $product_id;
+        //print_r($product);
         //Session::put('product_name', $product->product_name);
         //Session::put('description', $product->description);
         //Session::put('price', $product->price);

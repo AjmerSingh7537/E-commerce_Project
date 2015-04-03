@@ -11,6 +11,7 @@
 
     <title>Laravel</title>
 
+    {{--<link href="{{ asset('/css/app.css') }}" rel="stylesheet">--}}
     <!-- Font awesome css -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -157,7 +158,7 @@
                         <a href="/home">Products</a>
                     </li>
                     <li>
-                        <a href="{{ route('categories.index') }}">Categories</a>
+                        <a href="{{ route('categories') }}">Categories</a>
                     </li>
                     <li>
                         <a href="#"><span class="glyphicon glyphicon-edit"></span> Forms</a>
@@ -192,7 +193,7 @@
     $(document).ready(function() {
         $('#dataTables-example').DataTable({
             responsive: true,
-            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [1] }]
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [1, 5] }]
         });
     });
 </script>

@@ -3,6 +3,7 @@
 use App\Categories;
 use App\Http\Requests;
 use App\Http\Requests\AddCategoryRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CategoriesController extends Controller {
 
@@ -10,6 +11,7 @@ class CategoriesController extends Controller {
     public function __construct(Categories $category)
     {
         $this->category = $category;
+        $this->middleware('auth');
     }
 
 	/**
@@ -19,8 +21,11 @@ class CategoriesController extends Controller {
 	 */
 	public function index()
 	{
-        $categories = $this->category->get();
-		return view('categories', ['categories' => $categories]);
+        if(Auth::user()->type_id === 2){
+            $categories = $this->category->get();
+            return view('admin/categories/categories', ['categories' => $categories]);
+        }
+        return redirect('home');
 	}
 
 	/**
@@ -33,7 +38,7 @@ class CategoriesController extends Controller {
         $category_name = $request->input('category_name');
         $this->category->category_name = $category_name;
         $this->category->save();
-        return redirect()->route('categories.index');
+        return redirect()->route('categories');
 	}
 
 	/**
@@ -46,7 +51,7 @@ class CategoriesController extends Controller {
 	{
 		$category = $this->category->where('id', $id);
         $category->delete();
-        return redirect()->route('categories.index');
+        return redirect()->route('categories');
 	}
 
 }
