@@ -22,6 +22,7 @@ class AddProductRequest extends Request {
 	public function rules()
 	{
 		return [
+            'category_id' => 'required|not_in:0',
 			'product_name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',

@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Categories;
 use App\Http\Requests;
 use App\Http\Requests\AddProductRequest;
 use App\Products;
@@ -23,8 +24,7 @@ class ProductsController extends Controller {
 	 */
 	public function index()
 	{
-        $products = $this->product->get();
-		return view('products', ['products' => $products]);
+		return view('products', ['products' => $this->product->get()]);
 	}
 
 	/**
@@ -36,11 +36,26 @@ class ProductsController extends Controller {
 	{
         if(Auth::user()){
             if(Auth::user()->type_id === 2)
-                return view('admin/products/add_product');
+                return view('admin/products/add_product', ['categories' => $this->categoryList()]);
             return redirect()->route('products_path');
         }
         return redirect()->guest('auth/login');
 	}
+
+    /**
+     * Returns an array containing all the categories
+     *
+     * @return array
+     */
+    private function categoryList()
+    {
+        $categories = array();
+        $categories[0] = 'Select a category';
+        foreach(Categories::all() as $category){
+            $categories[$category->id] = $category->category_name;
+        }
+        return $categories;
+    }
 
 	/**
 	 * Store a newly created resource in storage.
@@ -53,12 +68,18 @@ class ProductsController extends Controller {
         $data = $request->all();
         $data['image'] = $this->imageModifier($request, $data);
         $this->sameValues($data, $this->product);
-//        return redirect()->route('products_path'); // this path goes to the products list for the users
         return redirect('home'); //this is where all the products are listed for the admin
 	}
 
+    /**
+     * Retrieve the input values and store them into the database
+     *
+     * @param $data
+     * @param $product
+     */
     private function sameValues($data, $product)
     {
+        $product->category_id = $data['category_id'];
         $product->product_name = $data['product_name'];
         $product->description = $data['description'];
         $product->price = $data['price'];
@@ -70,6 +91,13 @@ class ProductsController extends Controller {
         $product->save();
     }
 
+    /**
+     * Change the image name, move it to img/products, and return its new name
+     *
+     * @param $request
+     * @param $data
+     * @return string
+     */
     private function imageModifier($request, $data)
     {
         if(empty($data['image'])){
@@ -103,7 +131,7 @@ class ProductsController extends Controller {
 	{
         if(Auth::user()){
             if(Auth::user()->type_id === 2)
-                return view('admin/products/edit_product', ['product' => $product]);
+                return view('admin/products/edit_product', ['product' => $product, 'categories' => $this->categoryList()]);
             return redirect()->route('products_path');
         }
         return redirect()->guest('auth/login');
@@ -121,7 +149,6 @@ class ProductsController extends Controller {
         $data = $request->all();
         $data['image'] = $this->imageModifier($request, $data);
         $this->sameValues($data, $product);
-//        return redirect()->route('products_path'); // this goes to the products displayed to the user
         return redirect('home'); //this is where all the products are listed for the admin
 	}
 
@@ -135,10 +162,8 @@ class ProductsController extends Controller {
 	{
         $filename = $product->image;
         $product->delete();
-        if($filename !== 'default.jpg'){
+        if($filename !== 'default.jpg')
             unlink('img/products/' . $filename);
-        }
-//        return redirect()->route('products_path'); // this goes to the products displayed to the user
         return redirect('home'); //this is where all the products are listed for the admin
 	}
 

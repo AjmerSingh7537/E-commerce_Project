@@ -1,10 +1,4 @@
 <div class="form-group">
-    {!! Form::label('category_id', 'Category', ['class' => 'col-md-4 control-label']) !!}
-    <div class="col-md-6">
-        {!! Form::select('category_id', ['asd', 'dsa'], null, ['class' => 'form-control']) !!}
-    </div>
-</div>
-<div class="form-group">
     {!! Form::label('product_name', 'Product Name', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::text('product_name', null, ['class' => 'form-control']) !!}

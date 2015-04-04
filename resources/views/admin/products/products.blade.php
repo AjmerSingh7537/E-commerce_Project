@@ -36,7 +36,7 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>
-                                    <img src="img/products/{{ $product->image }}" alt="{{ $product->slug }}" style="width:100px;height: ">
+                                    <img src="img/products/{{ $product->image }}" alt="{{ $product->slug }}" style="width:100px;height: 50px;">
                                 </td>
                                 <td>{{ $product->product_name }}</td>
                                 <td>{{ $product->description }}</td>

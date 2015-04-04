@@ -15,6 +15,7 @@ class CreateProductsTable extends Migration {
 		Schema::create('products', function(Blueprint $table)
         {
             $table->increments('id');
+            $table->unsignedInteger('category_id');
             $table->string('product_name');
             $table->string('description', 1000);
             $table->float('price');
@@ -23,6 +24,7 @@ class CreateProductsTable extends Migration {
             $table->integer('rating_count')->default(0);
             $table->string('slug')->unique();
             $table->timestamps();
+            $table->foreign('category_id')->references('id')->on('categories');
         });
 	}
 
