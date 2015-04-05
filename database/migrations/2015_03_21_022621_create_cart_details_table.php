@@ -18,6 +18,7 @@ class CreateCartDetailsTable extends Migration {
             $table->unsignedInteger('cart_id');
             $table->unsignedInteger('product_id');
             $table->integer('quantity');
+            $table->float('price');
             $table->timestamp('created_at');
             $table->foreign('cart_id')->references('id')->on('cart');
             $table->foreign('product_id')->references('id')->on('products');

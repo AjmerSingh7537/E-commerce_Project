@@ -10,7 +10,7 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        @if(!Session::has('product_name'))
+                        @if(empty($items))
                             <div class="text-center">
                                 <p><b>There are no items in your Cart.</b></p>
                                 <p><b>If you already have an account, <a href="auth/login"> Sign In </a> to see your Cart.</b></p>
@@ -22,7 +22,7 @@
                                     @foreach($items as $index => $item)
                                         <tr>
                                             <td style="width: 100px;">
-                                                <img src="{{ $item['image'] }}" style="width:150px;height: 78px;">
+                                                <img src="img/products/{{ $item['image'] }}" style="width:150px;height: 78px;">
                                             </td>
                                             <td>{{ $item['product_name'] }}</td>
                                             <td class="text-center">${{ $item['price'] }}</td>
