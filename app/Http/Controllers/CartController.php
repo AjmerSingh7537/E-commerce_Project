@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Requests\CartRequest;
 use App\Products;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller {
@@ -14,7 +15,8 @@ class CartController extends Controller {
 	 */
 	public function index()
 	{
-		return "Product name: " . Session::get('product_name') . "\nDescription: " . Session::get('description') . "\nPrice: " . Session::get('price');
+		return view('cart', ['items' => Session::get('items')]);
+		//return "Product name: " . Session::get('product_name') . "\nDescription: " . Session::get('description') . "\nPrice: " . Session::get('price');
 	}
 
 	/**
@@ -35,16 +37,31 @@ class CartController extends Controller {
      */
 	public function store(CartRequest $request, Products $product)
 	{
-        $product_id = $request->get('product_id');
-        //echo $product_id;
-        $product = $product->where('id', $product_id);
-        return $product_id;
-        //print_r($product);
-        //Session::put('product_name', $product->product_name);
-        //Session::put('description', $product->description);
-        //Session::put('price', $product->price);
-        //return redirect()->route('show_cart');
+        //Session::forget('items');
+        $product = $product->where('id', $request->get('product_id'))->first();
+        if(Auth::user()){
+            //
+        }else{
+            Session::push('items', [
+                'image' => 'img/products/' . $product->image,
+                'product_name' => $product->product_name,
+                'description' => $product->description,
+                'price' => $product->price,
+                'quantity' => 1
+            ]);
+            $this->calculateSubtotal();
+        }
+        return redirect()->route('show_cart');
 	}
+
+    private function calculateSubtotal()
+    {
+        $subtotal = 0;
+        foreach(Session::get('items') as $item){
+            $subtotal += $item['price'] * $item['quantity'];
+        }
+        Session::put('subtotal', $subtotal);
+    }
 
 	/**
 	 * Display the specified resource.
@@ -87,7 +104,10 @@ class CartController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+        $items = Session::get('items');
+        Session::forget('items');
+//		Session::forget('items');
+        return redirect()->route('show_cart');
 	}
 
 }

@@ -54,7 +54,7 @@
                                 <span class="glyphicon glyphicon-shopping-cart"></span> Cart<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('#') }}"><span class="glyphicon glyphicon-trash"></span> Empty Cart</a></li>
-                                <li><a href="{{ url('#') }}"><span class="glyphicon glyphicon-eye-open"></span> View Cart</a></li>
+                                <li><a href="{{ url('/cart') }}"><span class="glyphicon glyphicon-eye-open"></span> View Cart</a></li>
                             </ul>
                         </li>
 						<li><a href="{{ url('/auth/login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
