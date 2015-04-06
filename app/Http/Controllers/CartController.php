@@ -12,6 +12,11 @@ class CartController extends Controller {
 
     private $cart;
 
+    /**
+     * Initializing cart
+     *
+     * @param Cart $cart
+     */
     public function __construct(Cart $cart)
     {
         $this->cart = $cart;
@@ -49,16 +54,6 @@ class CartController extends Controller {
         return $result;
     }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-//	public function create()
-//	{
-//		//
-//	}
-
     /**
      * Store a newly created resource in storage.
      *
@@ -85,6 +80,7 @@ class CartController extends Controller {
         }
         else{
             Session::push('items', [
+                'product_id' => $product->id,
                 'image' => $product->image,
                 'product_name' => $product->product_name,
                 'description' => $product->description,
@@ -138,17 +134,6 @@ class CartController extends Controller {
     }
 
 	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-//	public function show($id)
-//	{
-//		//
-//	}
-
-	/**
 	 * Show the form for editing the specified resource.
 	 *
 	 * @param  int  $id
@@ -179,8 +164,9 @@ class CartController extends Controller {
 	public function destroy($id)
 	{
         $items = Session::get('items');
-        Session::forget('items');
-//		Session::forget('items');
+        unset($items[$id]);
+        Session::put('items', $items);
+        $this->calculateSubtotal();
         return redirect()->route('show_cart');
 	}
 

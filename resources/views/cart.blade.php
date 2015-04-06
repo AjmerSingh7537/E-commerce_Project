@@ -31,7 +31,7 @@
                                             </td>
                                             <td class="text-right">
                                                 <p>${{ $item['price'] }}</p>
-                                                <p>Remove</p>
+                                                <p>{!! delete_form(['delete_item', $index]) !!}</p>
                                             </td>
                                         </tr>
                                     @endforeach
