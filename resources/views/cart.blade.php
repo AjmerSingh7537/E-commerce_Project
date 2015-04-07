@@ -13,7 +13,9 @@
                         @if(empty($items))
                             <div class="text-center">
                                 <p><b>There are no items in your Cart.</b></p>
-                                <p><b>If you already have an account, <a href="auth/login"> Sign In </a> to see your Cart.</b></p>
+                                @if(!Auth::user())
+                                    <p><b>If you already have an account, <a href="auth/login"> Sign In </a> to see your Cart.</b></p>
+                                @endif
                                 <p><a href="{{ route('products_path') }}" class="btn btn-success"><span class="glyphicon glyphicon-home"></span> Continue Shopping</a></p>
                             </div>
                         @else
@@ -30,8 +32,12 @@
                                                 <input class="text-center" type="text" value="{{ $item['quantity'] }}" style="width: 20px;">
                                             </td>
                                             <td class="text-right">
-                                                <p>${{ $item['price'] }}</p>
-                                                <p>{!! delete_form(['delete_item', $index]) !!}</p>
+                                                <p>${{ $item['quantity_price'] }}</p>
+                                                @if(Auth::user())
+                                                    <p>{!! delete_form(['delete_item', $item['product_id']]) !!}</p>
+                                                @else
+                                                    <p>{!! delete_form(['delete_item', $index]) !!}</p>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

@@ -36,22 +36,19 @@ class CartController extends Controller {
         return view('cart', ['items' => $items]);
 	}
 
+    /**
+     * The following method is used to get the cart items of the logged in user
+     *
+     * @return mixed
+     */
     private function getUsersCartItems()
     {
-        $items = DB::table('cart')
-            ->join('cart_details', 'cart.id', '=', 'cart_details.cart_id')
+        $items = Cart::join('cart_details', 'cart.id', '=', 'cart_details.cart_id')
             ->join('products', 'cart_details.product_id', '=', 'products.id')
             ->select('cart_details.product_id', 'products.product_name', 'cart_details.price', 'cart_details.quantity', 'products.image')
+            ->where('user_id', Auth::id())
             ->get();
-        $result = array();
-        foreach ($items as $index => $item) {
-            $result[$index]['product_id'] = $item->product_id;
-            $result[$index]['product_name'] = $item->product_name;
-            $result[$index]['price'] = $item->price;
-            $result[$index]['quantity'] = $item->quantity;
-            $result[$index]['image'] = $item->image;
-        }
-        return $result;
+        return $items;
     }
 
     /**
@@ -79,19 +76,63 @@ class CartController extends Controller {
             }
         }
         else{
+            $this->storeAnonymousCartDetails($product);
+            $this->calculateSubtotal();
+        }
+        return redirect()->route('show_cart');
+	}
+
+    /**
+     * This function returns the index of the searched product if it already exists. Otherwise, false
+     *
+     * @param $product
+     * @param $items
+     * @return bool|int|string
+     */
+    private function getExistingProductIndex($product, $items){
+        if(!empty($items)){
+            foreach($items as $index => $item){
+                if($item['product_id'] === $product->id){
+                    return $index;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * This method is storing all the products inside the cart (session) for the anonymous user
+     *
+     * @param $product
+     */
+    private function storeAnonymousCartDetails($product)
+    {
+        $items = Session::get('items');
+        $asd = $this->getExistingProductIndex($product, $items);
+        if($asd !== false){
+            $items[$asd]['quantity'] += 1;
+            $items[$asd]['quantity_price'] += $product->price;
+            Session::put('items', $items);
+        }else{
             Session::push('items', [
                 'product_id' => $product->id,
                 'image' => $product->image,
                 'product_name' => $product->product_name,
                 'description' => $product->description,
                 'price' => $product->price,
+                'quantity_price' => $product->price,
                 'quantity' => 1
             ]);
-            $this->calculateSubtotal();
         }
-        return redirect()->route('show_cart');
-	}
+    }
 
+    /**
+     * This method is use to add products to the cart (database) of a logged in user
+     *
+     * @param $product_id
+     * @param $cart_id
+     * @param Products $product
+     */
     private function storeCartDetails($product_id, $cart_id, Products $product)
     {
         $product_id_exits = DB::table('cart_details')->where('product_id', $product_id)->first();
@@ -113,22 +154,35 @@ class CartController extends Controller {
                 ]
             );
         }
+        $this->updateCartsTotalBalance($cart_id);
+        if(!Session::has('cart_id')){
+            Session::put('cart_id', $cart_id);
+        }
+    }
+
+    /**
+     * This method is used to update the total balance of the cart inside the database (for user)
+     *
+     * @param $cart_id
+     */
+    private function updateCartsTotalBalance($cart_id)
+    {
         DB::table('cart')
             ->where('id', $cart_id)
             ->update([
                 'total_balance' => DB::table('cart_details')->sum('price'),
                 'total_quantity' => DB::table('cart_details')->sum('quantity')
             ]);
-        if(!Session::has('cart_id')){
-            Session::put('cart_id', $cart_id);
-        }
     }
 
+    /**
+     * This method is used to calculate the subtotal of anonymous user's cart
+     */
     private function calculateSubtotal()
     {
         $subtotal = 0;
         foreach(Session::get('items') as $item){
-            $subtotal += $item['price'] * $item['quantity'];
+            $subtotal += $item['quantity_price'];
         }
         Session::put('subtotal', $subtotal);
     }
@@ -163,10 +217,16 @@ class CartController extends Controller {
 	 */
 	public function destroy($id)
 	{
-        $items = Session::get('items');
-        unset($items[$id]);
-        Session::put('items', $items);
-        $this->calculateSubtotal();
+        if(Auth::user()){
+            //the following statement need another where clause to check the cart id
+            DB::table('cart_details')->where('product_id', $id)->delete();
+            $this->updateCartsTotalBalance(Session::get('cart_id')); //This is not proper way of doing it. I'll change it later
+        }else{
+            $items = Session::get('items');
+            unset($items[$id]);
+            Session::put('items', $items);
+            $this->calculateSubtotal();
+        }
         return redirect()->route('show_cart');
 	}
 
