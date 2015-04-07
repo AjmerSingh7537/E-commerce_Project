@@ -33,6 +33,7 @@ class CartController extends Controller {
             $items = $this->getUsersCartItems();
         else
             $items = Session::get('items');
+        $this->calculateSubtotal();
         return view('cart', ['items' => $items]);
 	}
 
@@ -45,10 +46,20 @@ class CartController extends Controller {
     {
         $items = Cart::join('cart_details', 'cart.id', '=', 'cart_details.cart_id')
             ->join('products', 'cart_details.product_id', '=', 'products.id')
-            ->select('cart_details.product_id', 'products.product_name', 'cart_details.price', 'cart_details.quantity', 'products.image')
+            ->select('cart_details.product_id', 'products.product_name', 'products.price', 'cart_details.quantity_price', 'cart_details.quantity', 'products.image')
             ->where('user_id', Auth::id())
             ->get();
-        return $items;
+        $result = array();
+        // The following foreach is used to reformat the array that I got from the above query
+        foreach($items as $index => $item){
+            $result[$index]['product_id'] = $item['product_id'];
+            $result[$index]['product_name'] = $item['product_name'];
+            $result[$index]['price'] = $item['price'];
+            $result[$index]['quantity_price'] = $item['quantity_price'];
+            $result[$index]['quantity'] = $item['quantity'];
+            $result[$index]['image'] = $item['image'];
+        }
+        return $result;
     }
 
     /**
@@ -62,23 +73,16 @@ class CartController extends Controller {
 	{
         $product = $product->where('id', $request->get('product_id'))->first();
         if(Auth::user()){
-            if(Session::has('cart_id')) {
-                $this->storeCartDetails($request->get('product_id'), Session::get('cart_id'), $product);
-            }
-            else{
-                $cart_id = Cart::where('user_id', Auth::id())->first();
-                if(!empty($cart_id)) {
-                    $this->storeCartDetails($request->get('product_id'), $cart_id['id'], $product);
-                }else{
-                    $user_cart_id = DB::table('cart')->insertGetId(['user_id' => Auth::id()]);
-                    $this->storeCartDetails($request->get('product_id'), $user_cart_id, $product);
-                }
+            $cart_id = Cart::where('user_id', Auth::id())->first();
+            if(!empty($cart_id)) {
+                $this->storeCartDetails($request->get('product_id'), $cart_id['id'], $product);
+            }else{
+                $user_cart_id = DB::table('cart')->insertGetId(['user_id' => Auth::id()]);
+                $this->storeCartDetails($request->get('product_id'), $user_cart_id, $product);
             }
         }
-        else{
+        else
             $this->storeAnonymousCartDetails($product);
-            $this->calculateSubtotal();
-        }
         return redirect()->route('show_cart');
 	}
 
@@ -142,7 +146,7 @@ class CartController extends Controller {
                 ->update(
                     [
                         'quantity' => $product_id_exits->quantity + 1,
-                        'price' => $product_id_exits->price + $product->price
+                        'quantity_price' => $product_id_exits->quantity_price + $product->price
                     ]);
         }else {
             DB::table('cart_details')->insert(
@@ -150,14 +154,11 @@ class CartController extends Controller {
                     'cart_id' => $cart_id,
                     'product_id' => $product_id,
                     'quantity' => 1,
-                    'price' => $product->price
+                    'quantity_price' => $product->price
                 ]
             );
         }
         $this->updateCartsTotalBalance($cart_id);
-        if(!Session::has('cart_id')){
-            Session::put('cart_id', $cart_id);
-        }
     }
 
     /**
@@ -170,8 +171,8 @@ class CartController extends Controller {
         DB::table('cart')
             ->where('id', $cart_id)
             ->update([
-                'total_balance' => DB::table('cart_details')->sum('price'),
-                'total_quantity' => DB::table('cart_details')->sum('quantity')
+                'total_balance' => DB::table('cart_details')->where('cart_id', $cart_id)->sum('quantity_price'),
+                'total_quantity' => DB::table('cart_details')->where('cart_id', $cart_id)->sum('quantity')
             ]);
     }
 
@@ -181,8 +182,16 @@ class CartController extends Controller {
     private function calculateSubtotal()
     {
         $subtotal = 0;
-        foreach(Session::get('items') as $item){
-            $subtotal += $item['quantity_price'];
+        if(Auth::user()){
+            $cart_id = Cart::where('user_id', Auth::id())->first();
+            if(!empty($cart_id)) {
+                $balance = Cart::where('id', $cart_id['id'])->first();
+                $subtotal = $balance['total_balance'];
+            }
+        }else{
+            foreach(Session::get('items') as $item){
+                $subtotal += $item['quantity_price'];
+            }
         }
         Session::put('subtotal', $subtotal);
     }
@@ -218,9 +227,9 @@ class CartController extends Controller {
 	public function destroy($id)
 	{
         if(Auth::user()){
-            //the following statement need another where clause to check the cart id
+            $cart_id = Cart::where('user_id', Auth::id())->first();
             DB::table('cart_details')->where('product_id', $id)->delete();
-            $this->updateCartsTotalBalance(Session::get('cart_id')); //This is not proper way of doing it. I'll change it later
+            $this->updateCartsTotalBalance($cart_id['id']);
         }else{
             $items = Session::get('items');
             unset($items[$id]);
