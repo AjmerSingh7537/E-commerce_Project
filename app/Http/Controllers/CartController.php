@@ -189,9 +189,10 @@ class CartController extends Controller {
                 $subtotal = $balance['total_balance'];
             }
         }else{
-            foreach(Session::get('items') as $item){
-                $subtotal += $item['quantity_price'];
-            }
+            if(Session::has('items'))
+                foreach(Session::get('items') as $item){
+                    $subtotal += $item['quantity_price'];
+                }
         }
         Session::put('subtotal', $subtotal);
     }

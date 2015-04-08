@@ -45,7 +45,7 @@
 
                                         <a href="{{ route('edit_product', $product->slug) }}" class="btn btn-primary btn-xs">
                                             <span class="glyphicon glyphicon-edit"></span> Edit</a>
-                                        {!! delete_form(['products.destroy', $product->slug]) !!}
+                                        {!! delete_form(['delete_product', $product->slug]) !!}
 
                                 </td>
                             </tr>

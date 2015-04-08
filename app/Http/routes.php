@@ -26,7 +26,8 @@ Route::resource('products', 'ProductsController', [
         'show' => 'product_path',
         'create' => 'add_product_path',
         'update' => 'update_product',
-        'edit' => 'edit_product'
+        'edit' => 'edit_product',
+        'destroy' => 'delete_product'
     ]
 ]);
 

@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h1>Items in Your Cart</h1>
                     </div>
@@ -42,10 +42,15 @@
                                         </tr>
                                     @endforeach
                                 </table>
-                                <div>
+                            </div>
+                                <div class="list-inline">
+                                    <li><a href="{{ route('products_path') }}" class="btn btn-success"><span class="glyphicon glyphicon-home"></span> Continue Shopping</a></li>
+                                    @if(!Auth::user())
+                                        <li><a href="{{ url('auth/login') }}" class="btn btn-success"><span class="glyphicon glyphicon-save"></span> Save Cart</a></li>
+                                    @endif
                                     <p class="text-right">Cart Subtotal: {{ Session::get('subtotal') }}</p>
                                 </div>
-                            </div>
+
                         @endif
                     </div>
                 </div>
