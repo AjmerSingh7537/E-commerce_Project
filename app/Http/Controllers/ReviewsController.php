@@ -1,11 +1,19 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\AddReviewRequest;
+use App\Reviews;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewsController extends Controller {
+
+    private $reviews;
+
+    public function __construct(Reviews $reviews)
+    {
+        $this->reviews = $reviews;
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -27,14 +35,21 @@ class ReviewsController extends Controller {
 		//
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param AddReviewRequest $request
+     * @return Response
+     */
+	public function store(AddReviewRequest $request)
 	{
-		//
+        $inputs = $request->all();
+        $this->reviews->product_id = $inputs['product_id'];
+        $this->reviews->user_id = Auth::id();
+        $this->reviews->comment = $inputs['comment'];
+        $this->reviews->ratings = $inputs['ratings'];
+        $this->reviews->save();
+        return redirect()->back();
 	}
 
 	/**

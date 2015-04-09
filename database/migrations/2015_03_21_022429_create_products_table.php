@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration {
             $table->string('product_name');
             $table->string('description', 1000);
             $table->float('price');
+            $table->integer('quantity');
             $table->string('image');
             $table->float('rating_cache')->default(0.00);
             $table->integer('rating_count')->default(0);

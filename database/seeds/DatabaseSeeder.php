@@ -58,6 +58,7 @@ class ProductsTableSeeder extends Seeder {
                 'product_name' => 'First Product',
                 'description' => 'This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 'price' => '22.99',
+                'quantity' => '20',
                 'image' => 'product1.jpg',
                 'slug' => 'first-product'
             ],
@@ -66,6 +67,7 @@ class ProductsTableSeeder extends Seeder {
                 'product_name' => 'Second Product',
                 'description' => 'This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 'price' => '21.99',
+                'quantity' => '32',
                 'image' => 'product2.png',
                 'slug' => 'second-product'
             ],
@@ -74,6 +76,7 @@ class ProductsTableSeeder extends Seeder {
                 'product_name' => 'Third Product',
                 'description' => 'This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 'price' => '25.99',
+                'quantity' => '12',
                 'image' => 'product3.jpg',
                 'slug' => 'third-product'
             ],
@@ -82,6 +85,7 @@ class ProductsTableSeeder extends Seeder {
                 'product_name' => 'Fourth Product',
                 'description' => 'This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 'price' => '22.93',
+                'quantity' => '43',
                 'image' => 'product4.jpg',
                 'slug' => 'fourth-product'
             ],
@@ -90,6 +94,7 @@ class ProductsTableSeeder extends Seeder {
                 'product_name' => 'Fifth Product',
                 'description' => 'This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 'price' => '27.95',
+                'quantity' => '13',
                 'image' => 'product5.jpg',
                 'slug' => 'fifth-product'
             ],
@@ -98,6 +103,7 @@ class ProductsTableSeeder extends Seeder {
                 'product_name' => 'Sixth Product',
                 'description' => 'This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 'price' => '29.99',
+                'quantity' => '53',
                 'image' => 'product6.jpg',
                 'slug' => 'sixth-product'
             ],
@@ -106,6 +112,7 @@ class ProductsTableSeeder extends Seeder {
                 'product_name' => 'Seventh Product',
                 'description' => 'This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 'price' => '23.92',
+                'quantity' => '41',
                 'image' => 'product7.png',
                 'slug' => 'seventh-product'
             ],

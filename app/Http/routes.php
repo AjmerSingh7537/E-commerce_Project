@@ -52,7 +52,12 @@ Route::resource('cart', 'CartController', [
     ]
 ]);
 
-Route::resource('reviews', 'ReviewsController');
+Route::resource('reviews', 'ReviewsController', [
+    'names' => [
+        'store' => 'store_review',
+        'destroy' => 'delete_review'
+    ]
+]);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
