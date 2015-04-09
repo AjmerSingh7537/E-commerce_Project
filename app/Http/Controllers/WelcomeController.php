@@ -1,7 +1,5 @@
 <?php namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Session;
-
 class WelcomeController extends Controller {
 
 	/*

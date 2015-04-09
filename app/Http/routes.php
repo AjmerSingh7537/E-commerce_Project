@@ -27,7 +27,8 @@ Route::resource('products', 'ProductsController', [
         'create' => 'add_product_path',
         'update' => 'update_product',
         'edit' => 'edit_product',
-        'destroy' => 'delete_product'
+        'destroy' => 'delete_product',
+        'store' => 'store_product'
     ]
 ]);
 
@@ -50,6 +51,8 @@ Route::resource('cart', 'CartController', [
         'destroy' => 'delete_item'
     ]
 ]);
+
+Route::resource('reviews', 'ReviewsController');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

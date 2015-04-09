@@ -8,7 +8,7 @@
                     <div class="panel-heading">Add Product</div>
                     <div class="panel-body">
                         @include('includes._errorMessages')
-                        {!! Form::open(['route' => 'products.store', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::open(['route' => 'store_product', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
                             <div class="form-group">
                                 {!! Form::label('category_id', 'Category', ['class' => 'col-md-4 control-label']) !!}
                                 <div class="col-md-6">

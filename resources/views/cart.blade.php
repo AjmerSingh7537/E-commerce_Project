@@ -42,15 +42,15 @@
                                         </tr>
                                     @endforeach
                                 </table>
-                            </div>
+                                <hr>
                                 <div class="list-inline">
+                                    <p class="pull-right">Cart Subtotal: {{ Session::get('subtotal') }}</p>
                                     <li><a href="{{ route('products_path') }}" class="btn btn-success"><span class="glyphicon glyphicon-home"></span> Continue Shopping</a></li>
                                     @if(!Auth::user())
                                         <li><a href="{{ url('auth/login') }}" class="btn btn-success"><span class="glyphicon glyphicon-save"></span> Save Cart</a></li>
                                     @endif
-                                    <p class="text-right">Cart Subtotal: {{ Session::get('subtotal') }}</p>
                                 </div>
-
+                            </div>
                         @endif
                     </div>
                 </div>

@@ -83,7 +83,7 @@ class ProductsController extends Controller {
         $product->product_name = $data['product_name'];
         $product->description = $data['description'];
         $product->price = $data['price'];
-        $product->slug = $data['slug'];
+        $product->slug = snake_case(trim(ucwords($data['slug'])));
         if((!empty($product->image)) && $product->image !== 'default.jpg'){
             unlink('img/products/' . $product->image);
         }

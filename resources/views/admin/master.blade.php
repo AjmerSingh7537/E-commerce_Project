@@ -11,7 +11,6 @@
 
     <title>Laravel</title>
 
-    {{--<link href="{{ asset('/css/app.css') }}" rel="stylesheet">--}}
     <!-- Font awesome css -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 

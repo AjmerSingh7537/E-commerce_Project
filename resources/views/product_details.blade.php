@@ -16,24 +16,39 @@
                 <div class="ratings">
                     <p class="pull-right">{{ $product->rating_count }} reviews</p>
                     <p>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        4.0 stars
+                        @for ($i=1; $i <= 5 ; $i++)
+                            <span class="glyphicon glyphicon-star{{ ($i <= $product->rating_cache) ? '' : '-empty'}}"></span>
+                        @endfor
+                        {{ $product->rating_cache }} stars
                     </p>
                 </div>
             </div>
 
             <div class="well">
-
-                <div class="text-right">
-                    <a class="btn btn-success">Leave a Review</a>
-                </div>
-
-                <hr>
-
+                @if(Auth::user())
+                    <div class="form-group">
+                        {!! Form::open(['route' => 'store_product', 'class' => 'form-horizontal']) !!}
+                        <div class="form-group">
+                            {!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5', 'cols' => '10','placeholder' => 'Enter your review here...']) !!}
+                        </div>
+                        <div class="form-group">
+                            <div class="pull-left">
+                            {!! Form::input('hidden', 'ratings', null, ['id' => 'hidden_rating_count']) !!}
+                            {!! Form::input('number', 'rating-input', '0', [
+                                    'class' => 'rating',
+                                    'id' => 'rating-input',
+                                    'min' => '0', 'max' => '5', 'step' => '0.5', 'data-size' => 'xs'])
+                            !!}
+                            </div>
+                            <div class="pull-right">
+                                {!! Form::submit('Submit', ['class' => 'btn btn-success pull-right']) !!}
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <p class="text-justify">**To leave a review, please login <a href="{{ asset('auth/login') }}">here</a>**</p>
+                @endif
+                    <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <span class="glyphicon glyphicon-star"></span>

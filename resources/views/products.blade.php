@@ -16,16 +16,14 @@
                                 <h4 class="pull-right">${{ $product->price }}</h4>
                                 <h4><a href="{{ route('product_path', $product->slug) }}">{{ $product->product_name }}</a>
                                 </h4>
-                                <p>{{ $product->description }}</p>
+                                <p>{{ str_limit($product->description, 50, $end = '...') }}</p>
                             </div>
                             <div class="ratings">
                                 <p class="pull-right">{{ $product->rating_count }} reviews</p>
                                 <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
+                                    @for ($i=1; $i <= 5 ; $i++)
+                                        <span class="glyphicon glyphicon-star{{ ($i <= $product->rating_cache) ? '' : '-empty'}}"></span>
+                                    @endfor
                                 </p>
                             </div>
                             <div class="caption">
