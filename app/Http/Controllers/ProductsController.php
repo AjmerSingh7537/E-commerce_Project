@@ -4,6 +4,7 @@ use App\Categories;
 use App\Http\Requests;
 use App\Http\Requests\AddProductRequest;
 use App\Products;
+use App\Reviews;
 use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller {
@@ -118,7 +119,8 @@ class ProductsController extends Controller {
 	 */
 	public function show(Products $product)
 	{
-        return view('product_details', ['product' => $product]);
+        $reviews = array();
+        return view('product_details', ['product' => $product, 'reviews' => $reviews]);
 	}
 
 	/**

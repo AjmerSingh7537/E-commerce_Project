@@ -9,9 +9,10 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-    <!-- The following inks are used for the rating stars -->
+    <!-- The following links are used for the rating stars -->
     <link rel="stylesheet" href="{{ asset('/css/star-rating.css') }}" media="all" rel="stylesheet" type="text/css"/>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="{{ asset('/js/star-rating.js') }}" type="text/javascript"></script>
 
     <!-- CSS for the application -->
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
@@ -79,17 +80,6 @@
 		</div>
 	</nav>
         @yield('content')
-	<!-- The following script is used for the star rating -->
-    <script>
-        $(document).ready(function () {
-            $('#rating-input').on('rating.change', function() {
-                $('#hidden_rating_count').val($('#rating-input').val());
-            });
-        });
-    </script>
-    <!-- Scripts -->
-    <script src="{{ asset('/js/star-rating.js') }}" type="text/javascript"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-
 </body>
 </html>

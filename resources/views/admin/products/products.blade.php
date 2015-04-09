@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="caption">
-                <h1><a href="{{ route('add_product_path') }}" class=" pull-right btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add</a></h1>
+                <h1><a href="{{ route('add_product_path') }}" class="pull-right btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add</a></h1>
                 <h1 class="page-header">List of Products</h1>
             </div>
         </div>
@@ -42,11 +42,9 @@
                                 <td>{{ $product->description }}</td>
                                 <td>{{ $product->price }}</td>
                                 <td>
-
-                                        <a href="{{ route('edit_product', $product->slug) }}" class="btn btn-primary btn-xs">
-                                            <span class="glyphicon glyphicon-edit"></span> Edit</a>
-                                        {!! delete_form(['delete_product', $product->slug]) !!}
-
+                                    <a href="{{ route('edit_product', $product->slug) }}" class="btn btn-primary btn-xs">
+                                        <span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                    {!! delete_form(['delete_product', $product->slug]) !!}
                                 </td>
                             </tr>
                             @endforeach

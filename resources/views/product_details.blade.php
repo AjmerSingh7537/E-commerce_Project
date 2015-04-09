@@ -22,6 +22,12 @@
                         {{ $product->rating_cache }} stars
                     </p>
                 </div>
+                <div class="caption">
+                    {!! Form::open(['route' => 'add_to_cart']) !!}
+                    {!! Form::hidden('product_id', $product->id) !!}
+                    <button class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Add to Cart</button>
+                    {!! Form::close() !!}
+                </div>
             </div>
 
             <div class="well">
@@ -29,77 +35,35 @@
                     @include('includes._errorMessages')
                     <div class="form-group">
                         {!! Form::open(['route' => 'store_review', 'class' => 'form-horizontal']) !!}
-                        <div class="form-group">
-                            {!! Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '5', 'cols' => '10','placeholder' => 'Enter your review here...']) !!}
-                        </div>
-                        <div class="form-group">
-                            <div class="pull-left">
-                            {!! Form::input('hidden', 'ratings', null, ['id' => 'hidden_rating_count']) !!}
-                            {!! Form::input('hidden', 'product_id', $product->id) !!}
-                            {!! Form::input('number', 'rating-input', '0', [
-                                    'class' => 'rating',
-                                    'id' => 'rating-input',
-                                    'min' => '0', 'max' => '5', 'step' => '0.5', 'data-size' => 'xs'])
-                            !!}
-                            </div>
-                            <div class="pull-right">
-                                {!! Form::submit('Submit', ['class' => 'btn btn-success pull-right']) !!}
-                            </div>
-                        </div>
+                            @include('includes._reviewForm')
+                        {!! Form::close() !!}
                     </div>
                 @else
-                    <p class="text-justify">**To leave a review, please login <a href="{{ asset('auth/login') }}">here</a>**</p>
+                    <h6>**To leave a review, please login <a href="{{ asset('auth/login') }}">here</a>**</h6>
                 @endif
                     <hr>
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">10 days ago</span>
-                        <p>This product was great in terms of quality. I would definitely buy another!</p>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">12 days ago</span>
-                        <p>I've alredy ordered another one!</p>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">15 days ago</span>
-                        <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
-                    </div>
-                </div>
-
+                @if(!empty($reviews))
+                    @foreach($reviews as $review)
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                                Anonymous
+                                <span class="pull-right">10 days ago</span>
+                                <p>This product was great in terms of quality. I would definitely buy another!</p>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <h4>There is no review for this product</h4>
+                @endif
             </div>
-
         </div>
-
     </div>
-
 </div>
 <!-- /.container -->
 @endsection

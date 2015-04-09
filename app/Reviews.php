@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reviews extends Model {
 
-    protected $fillable = ['comment', 'rating'];
+    protected $fillable = ['comment', 'rating', 'product_id'];
 
     public function getTimeagoAttribute()
     {
