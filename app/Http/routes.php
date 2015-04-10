@@ -59,6 +59,13 @@ Route::resource('reviews', 'ReviewsController', [
     ]
 ]);
 
+Route::resource('users', 'UsersController', [
+    'only' => ['index'],
+    'names' => [
+        'index' => 'list_users'
+    ]
+]);
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

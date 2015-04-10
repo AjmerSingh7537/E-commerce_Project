@@ -160,7 +160,7 @@
                         <a href="{{ route('categories') }}">Categories</a>
                     </li>
                     <li>
-                        <a href="#"><span class="glyphicon glyphicon-edit"></span> Forms</a>
+                        <a href="{{ route('list_users') }}">Users</a>
                     </li>
                 </ul>
             </div>
@@ -193,6 +193,10 @@
         $('#dataTables-example').DataTable({
             responsive: true,
             "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [1, 5] }]
+        });
+        $('#sort_users').DataTable({
+            responsive: true,
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [4] }]
         });
     });
 </script>
