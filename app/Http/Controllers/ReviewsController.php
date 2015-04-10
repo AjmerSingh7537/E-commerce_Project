@@ -3,8 +3,10 @@
 use App\Http\Requests;
 
 use App\Http\Requests\AddReviewRequest;
+use App\Products;
 use App\Reviews;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReviewsController extends Controller {
 
@@ -44,11 +46,17 @@ class ReviewsController extends Controller {
 	public function store(AddReviewRequest $request)
 	{
         $inputs = $request->all();
+//        $product = Products::find('id', $inputs['product_id'])->first();
         $this->reviews->product_id = $inputs['product_id'];
         $this->reviews->user_id = Auth::id();
         $this->reviews->comment = $inputs['comment'];
         $this->reviews->ratings = $inputs['ratings'];
         $this->reviews->save();
+        DB::table('products')->where('id', $inputs['product_id'])
+            ->update([
+                'rating_count' => DB::table('reviews')->where('product_id', $inputs['product_id'])->count(),
+                'rating_cache' => DB::table('reviews')->where('product_id', $inputs['product_id'])->avg('ratings')
+            ]);
         return redirect()->back();
 	}
 

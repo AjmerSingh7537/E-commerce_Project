@@ -119,10 +119,28 @@ class ProductsController extends Controller {
 	 */
 	public function show(Products $product)
 	{
-        $reviews = array();
+        $reviews = $this->getReviewsList($product);
         return view('product_details', ['product' => $product, 'reviews' => $reviews]);
 	}
 
+    private function getReviewsList($product)
+    {
+        $reviews = $product->join('reviews', 'products.id', '=', 'reviews.product_id')
+            ->join('users', 'reviews.user_id', '=', 'users.id')
+            ->orderby('created_at', 'dsc')
+            ->select('reviews.ratings', 'reviews.comment', 'reviews.created_at', 'users.name')
+            ->where('products.id', $product->id)
+            ->get();
+        $result = array();
+        // The following foreach is used to reformat the array that I got from the above query
+        foreach($reviews as $index => $review){
+            $result[$index]['ratings'] = round($review->ratings);
+            $result[$index]['comment'] = $review->comment;
+            $result[$index]['created_at'] = \Carbon\Carbon::createFromTimeStamp(strtotime($review->created_at))->diffForHumans();
+            $result[$index]['username'] = $review->name;
+        }
+        return $result;
+    }
 	/**
 	 * Show the form for editing the specified resource.
 	 *

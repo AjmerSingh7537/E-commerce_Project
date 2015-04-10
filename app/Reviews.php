@@ -1,15 +1,16 @@
 <?php namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Reviews extends Model {
 
-    protected $fillable = ['comment', 'rating', 'product_id'];
+    protected $fillable = ['comment', 'rating'];
 
-    public function getTimeagoAttribute()
+    public function getTimeagoAttribute($date)
     {
-        $date = CarbonCarbon::createFromTimeStamp(strtotime($this->created_at))->diffForHumans();
-        return $date;
+        $re = new Reviews();
+        $date->diffForHumans();
     }
 
 }
