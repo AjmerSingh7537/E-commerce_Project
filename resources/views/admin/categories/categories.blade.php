@@ -8,7 +8,7 @@
                     <div class="panel-heading">Add Category</div>
                     <div class="panel-body">
                         @include('includes._errorMessages')
-                        {!! Form::open(['route' => 'add_category', 'class' => 'form-horizontal']) !!}
+                        {!! Form::open(['route' => 'add_category', 'class' => 'form-horizontal', 'id' => 'add_category']) !!}
                             @include('includes._categoryForm')
                         {!! Form::close() !!}
 

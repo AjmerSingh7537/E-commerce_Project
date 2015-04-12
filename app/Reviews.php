@@ -5,12 +5,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reviews extends Model {
 
-    protected $fillable = ['comment', 'rating'];
+    protected $fillable = ['comment', 'ratings'];
 
-    public function getTimeagoAttribute($date)
+    public function user()
     {
-        $re = new Reviews();
-        $date->diffForHumans();
+        return $this->belongsTo('App\User');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo('App\Products');
     }
 
 }

@@ -491,8 +491,8 @@
     });
 }(window.jQuery));
 
-$(document).ready(function () {
-    $('#rating-input').on('rating.change', function() {
-        $('#hidden_rating_count').val($('#rating-input').val());
-    });
-});
+//$(document).ready(function () {
+//    $('#rating-input').on('rating.change', function() {
+//        $('#hidden_rating_count').val($('#rating-input').val());
+//    });
+//});

@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
@@ -30,5 +31,22 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 * @var array
 	 */
 	protected $hidden = ['password', 'remember_token'];
+
+    public function reviews()
+    {
+        return $this->hasMany('App\Reviews');
+    }
+
+    public function cart()
+    {
+        return $this->hasOne('App\Cart');
+    }
+
+    public function is_admin()
+    {
+        if(Auth::user()->type_id === 2)
+            return true;
+        return false;
+    }
 
 }

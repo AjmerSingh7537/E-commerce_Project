@@ -17,9 +17,9 @@
                     <p class="pull-right">{{ $product->rating_count }} reviews</p>
                     <p>
                         @for ($i=1; $i <= 5 ; $i++)
-                            <span class="glyphicon glyphicon-star{{ ($i <= $product->rating_cache) ? '' : '-empty'}}"></span>
+                            <span class="glyphicon glyphicon-star{{ ($i <= round($product->rating_cache)) ? '' : '-empty'}}"></span>
                         @endfor
-                        {{ $product->rating_cache }} stars
+                        {{ round($product->rating_cache) }} stars
                     </p>
                 </div>
                 <div class="caption">
@@ -50,8 +50,8 @@
                                 @for ($i=1; $i <= 5 ; $i++)
                                     <span class="glyphicon glyphicon-star{{ ($i <= $review['ratings']) ? '' : '-empty'}}"></span>
                                 @endfor
-                                {{ $review['username'] }}
-                                <span class="pull-right">{{ $review['created_at'] }}</span>
+                                {{ $review['name'] }}
+                                <span class="pull-right">{{ \Carbon\Carbon::createFromTimeStamp(strtotime($review['created_at']))->diffForHumans() }}</span>
                                 <p>{{ $review['comment'] }}</p>
                             </div>
                         </div>

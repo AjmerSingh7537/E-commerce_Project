@@ -8,4 +8,9 @@ class Cart extends Model {
 
     protected $fillable = ['user_id', 'total_quantity', 'total_balance'];
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
 }

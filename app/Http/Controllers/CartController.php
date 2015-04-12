@@ -48,18 +48,8 @@ class CartController extends Controller {
             ->join('products', 'cart_details.product_id', '=', 'products.id')
             ->select('cart_details.product_id', 'products.product_name', 'products.price', 'cart_details.quantity_price', 'cart_details.quantity', 'products.image')
             ->where('user_id', Auth::id())
-            ->get();
-        $result = array();
-        // The following foreach is used to reformat the array that I got from the above query
-        foreach($items as $index => $item){
-            $result[$index]['product_id'] = $item['product_id'];
-            $result[$index]['product_name'] = $item['product_name'];
-            $result[$index]['price'] = $item['price'];
-            $result[$index]['quantity_price'] = $item['quantity_price'];
-            $result[$index]['quantity'] = $item['quantity'];
-            $result[$index]['image'] = $item['image'];
-        }
-        return $result;
+            ->get()->toArray();
+        return $items;
     }
 
     /**

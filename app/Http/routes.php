@@ -61,9 +61,7 @@ Route::resource('reviews', 'ReviewsController', [
 
 Route::resource('users', 'UsersController', [
     'only' => ['index'],
-    'names' => [
-        'index' => 'list_users'
-    ]
+    'names' => ['index' => 'list_users']
 ]);
 
 Route::controllers([

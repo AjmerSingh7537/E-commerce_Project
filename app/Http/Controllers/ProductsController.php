@@ -4,8 +4,6 @@ use App\Categories;
 use App\Http\Requests;
 use App\Http\Requests\AddProductRequest;
 use App\Products;
-use App\Reviews;
-use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller {
 
@@ -17,6 +15,8 @@ class ProductsController extends Controller {
     public function __construct(Products $product)
     {
         $this->product = $product;
+        $this->middleware('admin', ['only' => ['create', 'edit']]);
+        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 	/**
 	 * Display a listing of the resource.
@@ -35,12 +35,7 @@ class ProductsController extends Controller {
 	 */
 	public function create()
 	{
-        if(Auth::user()){
-            if(Auth::user()->type_id === 2)
-                return view('admin/products/add_product', ['categories' => $this->categoryList()]);
-            return redirect()->route('products_path');
-        }
-        return redirect()->guest('auth/login');
+        return view('admin/products/add_product', ['categories' => $this->categoryList()]);
 	}
 
     /**
@@ -130,16 +125,8 @@ class ProductsController extends Controller {
             ->orderby('created_at', 'dsc')
             ->select('reviews.ratings', 'reviews.comment', 'reviews.created_at', 'users.name')
             ->where('products.id', $product->id)
-            ->get();
-        $result = array();
-        // The following foreach is used to reformat the array that I got from the above query
-        foreach($reviews as $index => $review){
-            $result[$index]['ratings'] = round($review->ratings);
-            $result[$index]['comment'] = $review->comment;
-            $result[$index]['created_at'] = \Carbon\Carbon::createFromTimeStamp(strtotime($review->created_at))->diffForHumans();
-            $result[$index]['username'] = $review->name;
-        }
-        return $result;
+            ->get()->toArray();
+        return $reviews;
     }
 	/**
 	 * Show the form for editing the specified resource.
@@ -149,12 +136,7 @@ class ProductsController extends Controller {
 	 */
 	public function edit(Products $product)
 	{
-        if(Auth::user()){
-            if(Auth::user()->type_id === 2)
-                return view('admin/products/edit_product', ['product' => $product, 'categories' => $this->categoryList()]);
-            return redirect()->route('products_path');
-        }
-        return redirect()->guest('auth/login');
+        return view('admin/products/edit_product', ['product' => $product, 'categories' => $this->categoryList()]);
 	}
 
 	/**

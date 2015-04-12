@@ -45,20 +45,24 @@ class ReviewsController extends Controller {
      */
 	public function store(AddReviewRequest $request)
 	{
-        $inputs = $request->all();
-//        $product = Products::find('id', $inputs['product_id'])->first();
-        $this->reviews->product_id = $inputs['product_id'];
-        $this->reviews->user_id = Auth::id();
-        $this->reviews->comment = $inputs['comment'];
-        $this->reviews->ratings = $inputs['ratings'];
-        $this->reviews->save();
-        DB::table('products')->where('id', $inputs['product_id'])
-            ->update([
-                'rating_count' => DB::table('reviews')->where('product_id', $inputs['product_id'])->count(),
-                'rating_cache' => DB::table('reviews')->where('product_id', $inputs['product_id'])->avg('ratings')
-            ]);
+        $data = $request->all();
+        $product = Products::whereSlug($data['product_slug'])->first();
+        $review = new Reviews($data);
+        $review->user()->associate(Auth::user());
+        $review->product()->associate($product);
+        $review->save();
+        $this->updateRatingCount($product);
         return redirect()->back();
 	}
+
+    private function updateRatingCount($product)
+    {
+        DB::table('products')->where('id', $product->id)
+            ->update([
+                'rating_count' => DB::table('reviews')->where('product_id', $product->id)->count(),
+                'rating_cache' => DB::table('reviews')->where('product_id', $product->id)->avg('ratings')
+            ]);
+    }
 
 	/**
 	 * Display the specified resource.
