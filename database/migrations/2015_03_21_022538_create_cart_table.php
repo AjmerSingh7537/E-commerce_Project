@@ -19,7 +19,7 @@ class CreateCartTable extends Migration {
             $table->integer('total_quantity');
             $table->float('total_balance');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 	}
 

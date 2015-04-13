@@ -20,8 +20,8 @@ class CreateCartDetailsTable extends Migration {
             $table->integer('cart_quantity');
             $table->float('quantity_price');
             $table->timestamp('created_at');
-            $table->foreign('cart_id')->references('id')->on('cart');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('cart_id')->references('id')->on('cart')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
 	}
 
