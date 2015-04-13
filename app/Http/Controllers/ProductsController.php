@@ -120,13 +120,7 @@ class ProductsController extends Controller {
 
     private function getReviewsList($product)
     {
-        $reviews = $product->join('reviews', 'products.id', '=', 'reviews.product_id')
-            ->join('users', 'reviews.user_id', '=', 'users.id')
-            ->orderby('created_at', 'dsc')
-            ->select('reviews.ratings', 'reviews.comment', 'reviews.created_at', 'users.name')
-            ->where('products.id', $product->id)
-            ->get()->toArray();
-        return $reviews;
+        return $product->reviews()->orderBy('created_at', 'dsc')->get();
     }
 	/**
 	 * Show the form for editing the specified resource.

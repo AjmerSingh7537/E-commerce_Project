@@ -13,4 +13,9 @@ class Products extends Model {
         return $this->hasMany('App\Reviews', 'product_id');
     }
 
+    public function cart_details()
+    {
+        return $this->belongsTo('App\Cart_details');
+    }
+
 }

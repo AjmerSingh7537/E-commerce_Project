@@ -29,7 +29,7 @@
                                             <td>{{ $item['product_name'] }}</td>
                                             <td class="text-center">${{ $item['price'] }}</td>
                                             <td class="text-center">
-                                                <input class="text-center" type="text" value="{{ $item['quantity'] }}" style="width: 20px;">
+                                                <input class="text-center" type="text" value="{{ $item['cart_quantity'] }}" style="width: 20px;">
                                             </td>
                                             <td class="text-right">
                                                 <p>${{ $item['quantity_price'] }}</p>

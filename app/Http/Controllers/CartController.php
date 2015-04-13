@@ -29,28 +29,15 @@ class CartController extends Controller {
 	 */
 	public function index()
 	{
-        if(Auth::user() && Auth::user()->type_id !== 2)
-            $items = $this->getUsersCartItems();
+        if(Auth::user() && Auth::user()->type_id !== 2) {
+            $cart_id = Cart::firstOrCreate(['user_id' => Auth::id()])->toArray();
+            $items = Auth::user()->cart->cart_details()->join('products', 'products.id', '=', 'cart_details.product_id')->get()->toArray();
+        }
         else
             $items = Session::get('items');
         $this->calculateSubtotal();
         return view('cart', ['items' => $items]);
 	}
-
-    /**
-     * The following method is used to get the cart items of the logged in user
-     *
-     * @return mixed
-     */
-    private function getUsersCartItems()
-    {
-        $items = Cart::join('cart_details', 'cart.id', '=', 'cart_details.cart_id')
-            ->join('products', 'cart_details.product_id', '=', 'products.id')
-            ->select('cart_details.product_id', 'products.product_name', 'products.price', 'cart_details.quantity_price', 'cart_details.quantity', 'products.image')
-            ->where('user_id', Auth::id())
-            ->get()->toArray();
-        return $items;
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -63,13 +50,8 @@ class CartController extends Controller {
 	{
         $product = $product->where('id', $request->get('product_id'))->first();
         if(Auth::user()){
-            $cart_id = Cart::where('user_id', Auth::id())->first();
-            if(!empty($cart_id)) {
-                $this->storeCartDetails($request->get('product_id'), $cart_id['id'], $product);
-            }else{
-                $user_cart_id = DB::table('cart')->insertGetId(['user_id' => Auth::id()]);
-                $this->storeCartDetails($request->get('product_id'), $user_cart_id, $product);
-            }
+            $cartObj = Cart::firstOrCreate(['user_id' => Auth::id()]);
+            $this->storeCartDetails($cartObj, $product);
         }
         else
             $this->storeAnonymousCartDetails($product);
@@ -78,6 +60,7 @@ class CartController extends Controller {
 
     /**
      * This function returns the index of the searched product if it already exists. Otherwise, false
+     * It is used for the anonymous user's cart
      *
      * @param $product
      * @param $items
@@ -86,9 +69,8 @@ class CartController extends Controller {
     private function getExistingProductIndex($product, $items){
         if(!empty($items)){
             foreach($items as $index => $item){
-                if($item['product_id'] === $product->id){
+                if($item['product_id'] === $product->id)
                     return $index;
-                }
             }
         }
         return false;
@@ -102,10 +84,10 @@ class CartController extends Controller {
     private function storeAnonymousCartDetails($product)
     {
         $items = Session::get('items');
-        $asd = $this->getExistingProductIndex($product, $items);
-        if($asd !== false){
-            $items[$asd]['quantity'] += 1;
-            $items[$asd]['quantity_price'] += $product->price;
+        $index = $this->getExistingProductIndex($product, $items);
+        if($index !== false){
+            $items[$index]['cart_quantity'] += 1;
+            $items[$index]['quantity_price'] += $product->price;
             Session::put('items', $items);
         }else{
             Session::push('items', [
@@ -115,7 +97,7 @@ class CartController extends Controller {
                 'description' => $product->description,
                 'price' => $product->price,
                 'quantity_price' => $product->price,
-                'quantity' => 1
+                'cart_quantity' => 1
             ]);
         }
     }
@@ -123,36 +105,35 @@ class CartController extends Controller {
     /**
      * This method is use to add products to the cart (database) of a logged in user
      *
-     * @param $product_id
-     * @param $cart_id
+     * @param $cartObj
      * @param Products $product
      */
-    private function storeCartDetails($product_id, $cart_id, Products $product)
+    private function storeCartDetails($cartObj, Products $product)
     {
-        $product_id_exits = DB::table('cart_details')->where('product_id', $product_id)->first();
+        $product_id_exits = Auth::user()->cart->cart_details()->where('product_id', $product->id)->first();
         if(!empty($product_id_exits)){
-            DB::table('cart_details')
-                ->where('product_id', $product_id)
+            Auth::user()->cart->cart_details()->where('product_id', $product->id)
                 ->update(
                     [
-                        'quantity' => $product_id_exits->quantity + 1,
+                        'cart_quantity' => $product_id_exits->cart_quantity + 1,
                         'quantity_price' => $product_id_exits->quantity_price + $product->price
                     ]);
         }else {
             DB::table('cart_details')->insert(
                 [
-                    'cart_id' => $cart_id,
-                    'product_id' => $product_id,
-                    'quantity' => 1,
+                    'cart_id' => $cartObj->id,
+                    'product_id' => $product->id,
+                    'cart_quantity' => 1,
                     'quantity_price' => $product->price
                 ]
             );
         }
-        $this->updateCartsTotalBalance($cart_id);
+        $this->updateCartsTotalBalance($cartObj->id);
     }
 
     /**
-     * This method is used to update the total balance of the cart inside the database (for user)
+     * This method is used to update the total balance of the cart inside the database
+     * (for logged in user)
      *
      * @param $cart_id
      */
@@ -162,7 +143,7 @@ class CartController extends Controller {
             ->where('id', $cart_id)
             ->update([
                 'total_balance' => DB::table('cart_details')->where('cart_id', $cart_id)->sum('quantity_price'),
-                'total_quantity' => DB::table('cart_details')->where('cart_id', $cart_id)->sum('quantity')
+                'total_quantity' => DB::table('cart_details')->where('cart_id', $cart_id)->sum('cart_quantity')
             ]);
     }
 
@@ -172,14 +153,10 @@ class CartController extends Controller {
     private function calculateSubtotal()
     {
         $subtotal = 0;
-        if(Auth::user()){
-            $cart_id = Cart::where('user_id', Auth::id())->first();
-            if(!empty($cart_id)) {
-                $balance = Cart::where('id', $cart_id['id'])->first();
-                $subtotal = $balance['total_balance'];
-            }
-        }else{
-            if(Session::has('items'))
+        if(Auth::user())
+            $subtotal = Auth::user()->cart->total_balance;
+        else{
+            if(Session::get('items'))
                 foreach(Session::get('items') as $item){
                     $subtotal += $item['quantity_price'];
                 }
@@ -195,7 +172,7 @@ class CartController extends Controller {
 	 */
 	public function edit($id)
 	{
-		return "you are editing the following product " . $id;
+		//
 	}
 
 	/**
@@ -218,14 +195,12 @@ class CartController extends Controller {
 	public function destroy($id)
 	{
         if(Auth::user()){
-            $cart_id = Cart::where('user_id', Auth::id())->first();
-            DB::table('cart_details')->where('product_id', $id)->delete();
-            $this->updateCartsTotalBalance($cart_id['id']);
+            Auth::user()->cart->cart_details()->where('product_id', $id)->delete();
+            $this->updateCartsTotalBalance(Auth::user()->cart->id);
         }else{
             $items = Session::get('items');
             unset($items[$id]);
             Session::put('items', $items);
-            $this->calculateSubtotal();
         }
         return redirect()->route('show_cart');
 	}
