@@ -7,19 +7,23 @@ use App\Products;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Gloudemans\Shoppingcart\Cart as SessionCart;
 
 class CartController extends Controller {
 
     private $cart;
+    private $session_cart;
 
     /**
      * Initializing cart
      *
      * @param Cart $cart
+     * @param SessionCart $session_cart
      */
-    public function __construct(Cart $cart)
+    public function __construct(Cart $cart, SessionCart $session_cart)
     {
         $this->cart = $cart;
+        $this->session_cart = $session_cart;
     }
 
 	/**
@@ -34,7 +38,7 @@ class CartController extends Controller {
             $items = Auth::user()->cart->cart_details()->join('products', 'products.id', '=', 'cart_details.product_id')->get()->toArray();
         }
         else
-            $items = Session::get('items');
+            $items = $this->session_cart->content()->toArray();
         $this->calculateSubtotal();
         return view('cart', ['items' => $items]);
 	}
@@ -54,53 +58,9 @@ class CartController extends Controller {
             $this->storeCartDetails($cartObj, $product);
         }
         else
-            $this->storeAnonymousCartDetails($product);
+            $this->session_cart->add($product->id, $product->product_name, 1, $product->price, ['image' => $product->image, 'description' => $product->description]);
         return redirect()->route('show_cart');
 	}
-
-    /**
-     * This function returns the index of the searched product if it already exists. Otherwise, false
-     * It is used for the anonymous user's cart
-     *
-     * @param $product
-     * @param $items
-     * @return bool|int|string
-     */
-    private function getExistingProductIndex($product, $items){
-        if(!empty($items)){
-            foreach($items as $index => $item){
-                if($item['product_id'] === $product->id)
-                    return $index;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * This method is storing all the products inside the cart (session) for the anonymous user
-     *
-     * @param $product
-     */
-    private function storeAnonymousCartDetails($product)
-    {
-        $items = Session::get('items');
-        $index = $this->getExistingProductIndex($product, $items);
-        if($index !== false){
-            $items[$index]['cart_quantity'] += 1;
-            $items[$index]['quantity_price'] += $product->price;
-            Session::put('items', $items);
-        }else{
-            Session::push('items', [
-                'product_id' => $product->id,
-                'image' => $product->image,
-                'product_name' => $product->product_name,
-                'description' => $product->description,
-                'price' => $product->price,
-                'quantity_price' => $product->price,
-                'cart_quantity' => 1
-            ]);
-        }
-    }
 
     /**
      * This method is use to add products to the cart (database) of a logged in user
@@ -148,19 +108,17 @@ class CartController extends Controller {
     }
 
     /**
-     * This method is used to calculate the subtotal of anonymous user's cart
+     * This method is used to calculate the subtotal of anonymous user's cart and logged in user's cart
      */
     private function calculateSubtotal()
     {
         $subtotal = 0;
         if(Auth::user())
             $subtotal = Auth::user()->cart->total_balance;
-        else{
-            if(Session::get('items'))
-                foreach(Session::get('items') as $item){
-                    $subtotal += $item['quantity_price'];
-                }
-        }
+        else
+            foreach($this->session_cart->content() as $item){
+                $subtotal += $item->subtotal;
+            }
         Session::put('subtotal', $subtotal);
     }
 
@@ -197,11 +155,9 @@ class CartController extends Controller {
         if(Auth::user()){
             Auth::user()->cart->cart_details()->where('product_id', $id)->delete();
             $this->updateCartsTotalBalance(Auth::user()->cart->id);
-        }else{
-            $items = Session::get('items');
-            unset($items[$id]);
-            Session::put('items', $items);
         }
+        else
+            $this->session_cart->remove($id);
         return redirect()->route('show_cart');
 	}
 

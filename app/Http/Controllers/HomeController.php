@@ -3,8 +3,8 @@
 use App\Cart;
 use App\Products;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use DB;
+use Gloudemans\Shoppingcart\Cart as SessionCart;
 
 class HomeController extends Controller {
 
@@ -19,13 +19,16 @@ class HomeController extends Controller {
 	|
 	*/
 
+    private $session_cart;
+
     /**
      * Create a new controller instance.
-     *
+     * @param SessionCart $session_cart
      */
-	public function __construct()
+	public function __construct(SessionCart $session_cart)
 	{
 		$this->middleware('auth');
+        $this->session_cart = $session_cart;
 	}
 
 	/**
@@ -37,32 +40,30 @@ class HomeController extends Controller {
 	{
         if(Auth::user() && Auth::user()->type_id === 2)
 		    return view('admin/products/products', ['products' => Products::all()]);
-        if(Session::has('items') && Auth::user()->type_id === 1){
-            $items = Session::get('items');
-            $cart_id = Cart::firstOrCreate(['user_id' => Auth::id()])->toArray();
-            $this->storeCart($items, $cart_id['id']);
-            Session::forget('items');
-        }
+        $cart_id = Cart::firstOrCreate(['user_id' => Auth::id()])->toArray();
+        $this->storeCart($this->session_cart->content()->toArray(), $cart_id['id']);
+        $this->session_cart->destroy();
         return view('home');
 	}
 
     private function storeCart($items, $cart_id)
     {
-        foreach($items as $item){
-            $product_id_exits = Auth::user()->cart->cart_details()->where('product_id', $item['product_id'])->first();
-            if(!empty($product_id_exits)){
-                Auth::user()->cart->cart_details()->where('product_id', $item['product_id'])
+        foreach($items as $index => $item){
+            $product_id_exits = Auth::user()->cart->cart_details()->where('product_id', $item['id'])->first();
+            if (!empty($product_id_exits)) {
+                Auth::user()->cart->cart_details()->where('product_id', $item['id'])
                     ->update(
                         [
-                            'cart_quantity' => $product_id_exits->cart_quantity + $item['cart_quantity'],
-                            'quantity_price' => $product_id_exits->quantity_price + $item['quantity_price']
+                            'cart_quantity' => $product_id_exits->cart_quantity + $item['qty'],
+                            'quantity_price' => $product_id_exits->quantity_price + $item['subtotal']
                         ]);
-            }else{
+            }
+            else {
                 DB::table('cart_details')->insert([
                     'cart_id' => $cart_id,
-                    'product_id' => $item['product_id'],
-                    'cart_quantity' => $item['cart_quantity'],
-                    'quantity_price' => $item['quantity_price']
+                    'product_id' => $item['id'],
+                    'cart_quantity' => $item['qty'],
+                    'quantity_price' => $item['subtotal']
                 ]);
             }
         }

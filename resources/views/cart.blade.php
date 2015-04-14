@@ -21,26 +21,41 @@
                         @else
                             <div class="container-fluid">
                                 <table class="table">
-                                    @foreach($items as $index => $item)
-                                        <tr>
-                                            <td style="width: 100px;">
-                                                <img src="img/products/{{ $item['image'] }}" style="width:150px;height: 78px;">
-                                            </td>
-                                            <td>{{ $item['product_name'] }}</td>
-                                            <td class="text-center">${{ $item['price'] }}</td>
-                                            <td class="text-center">
-                                                <input class="text-center" type="text" value="{{ $item['cart_quantity'] }}" style="width: 20px;">
-                                            </td>
-                                            <td class="text-right">
-                                                <p>${{ $item['quantity_price'] }}</p>
-                                                @if(Auth::user())
+                                    @if(Auth::user())
+                                        @foreach($items as $index => $item)
+                                            <tr>
+                                                <td style="width: 100px;">
+                                                    <img src="img/products/{{ $item['image'] }}" style="width:150px;height: 78px;">
+                                                </td>
+                                                <td>{{ $item['product_name'] }}</td>
+                                                <td class="text-center">${{ $item['price'] }}</td>
+                                                <td class="text-center">
+                                                    <input class="text-center" type="text" value="{{ $item['cart_quantity'] }}" style="width: 20px;">
+                                                </td>
+                                                <td class="text-right">
+                                                    <p>${{ $item['quantity_price'] }}</p>
                                                     <p>{!! delete_form(['delete_item', $item['product_id']]) !!}</p>
-                                                @else
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        @foreach($items as $index => $item)
+                                            <tr>
+                                                <td style="width: 100px;">
+                                                    <img src="img/products/{{ $item['options']['image'] }}" style="width:150px;height: 78px;">
+                                                </td>
+                                                <td>{{ $item['name'] }}</td>
+                                                <td class="text-center">${{ $item['price'] }}</td>
+                                                <td class="text-center">
+                                                    <input class="text-center" type="text" value="{{ $item['qty'] }}" style="width: 20px;">
+                                                </td>
+                                                <td class="text-right">
+                                                    <p>${{ $item['subtotal'] }}</p>
                                                     <p>{!! delete_form(['delete_item', $index]) !!}</p>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </table>
                                 <hr>
                                 <div class="list-inline">
