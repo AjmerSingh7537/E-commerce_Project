@@ -192,7 +192,7 @@
     $(document).ready(function() {
         $('#dataTables-example').DataTable({
             responsive: true,
-            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [1, 5] }]
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [1, 6] }]
         });
         $('#sort_users').DataTable({
             responsive: true,
