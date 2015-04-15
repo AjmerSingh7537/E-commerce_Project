@@ -20,46 +20,48 @@
                             </div>
                         @else
                             <div class="container-fluid">
-                                <table class="table">
-                                    @if(Auth::user())
-                                        @foreach($items as $index => $item)
-                                            <tr>
-                                                <td style="width: 100px;">
-                                                    <img src="img/products/{{ $item['image'] }}" style="width:150px;height: 78px;">
-                                                </td>
-                                                <td>{{ $item['product_name'] }}</td>
-                                                <td class="text-center">${{ $item['price'] }}</td>
-                                                <td class="text-center">
-                                                    <input class="text-center" type="text" value="{{ $item['cart_quantity'] }}" style="width: 20px;">
-                                                </td>
-                                                <td class="text-right">
-                                                    <p>${{ $item['quantity_price'] }}</p>
-                                                    <p>{!! delete_form(['delete_item', $item['product_id']]) !!}</p>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        @foreach($items as $index => $item)
-                                            <tr>
-                                                <td style="width: 100px;">
-                                                    <img src="img/products/{{ $item['options']['image'] }}" style="width:150px;height: 78px;">
-                                                </td>
-                                                <td>{{ $item['name'] }}</td>
-                                                <td class="text-center">${{ $item['price'] }}</td>
-                                                <td class="text-center">
-                                                    <input class="text-center" type="text" value="{{ $item['qty'] }}" style="width: 20px;">
-                                                </td>
-                                                <td class="text-right">
-                                                    <p>${{ $item['subtotal'] }}</p>
-                                                    <p>{!! delete_form(['delete_item', $index]) !!}</p>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                </table>
-                                <hr>
+                                <div class="col-md-12">
+                                    <div class="col-md-2">
+                                        <img src="img/products/{{ $item['options']['image'] }}" style="width:170px;height: 100px;">
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="col-md-6">
+                                            <h4>{{ $item['name'] }}</h4>
+                                        </div>
+                                        <div class="col-lg-2 text-center">
+                                            <h4>{{ $item['price'] }}</h4>
+                                        </div>
+                                        <div class="col-md-2 text-right">
+                                            {!! Form::open(['route' => ['update_cart', $index], 'method' => 'PATCH']) !!}
+                                            {!! Form::input('number', 'qty', $item['qty'],
+                                            ['class' => 'form-control text-center', 'min' => 1, 'style' => 'width: 40px;']) !!}
+                                            {!! Form::close() !!}
+                                        </div>
+                                        <div class="col-lg-2 text-right">
+                                            <h4>{{ $item['subtotal'] }}</h4>
+                                        </div>
+                                        <div class="col-md-12"><hr></div>
+                                        <div class="col-md-10 h6">
+                                            Availability: In stock
+                                        </div>
+                                        <div class="col-md-2 text-right">
+                                            {!! delete_form(['delete_item', $index]) !!}
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{ $item['options']['description'] }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12"><hr></div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2 col-md-offset-10 pull-right">
+                                    <p>Cart Subtotal: {{ Session::get('subtotal') }}</p>
+                                    <p>Estimated Tax: </p>
+                                    <p>Total: </p>
+                                    </div>
+                                    <hr class="col-md-12">
+                                </div>
                                 <div class="list-inline">
-                                    <p class="pull-right">Cart Subtotal: {{ Session::get('subtotal') }}</p>
                                     <li><a href="{{ route('products_path') }}" class="btn btn-success"><span class="glyphicon glyphicon-home"></span> Continue Shopping</a></li>
                                     @if(!Auth::user())
                                         <li><a href="{{ url('auth/login') }}" class="btn btn-success"><span class="glyphicon glyphicon-save"></span> Save Cart</a></li>

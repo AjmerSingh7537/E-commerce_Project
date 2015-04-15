@@ -80,7 +80,7 @@
 		</div>
 	</nav>
         @yield('content')
-    <script src="{{ asset('/js/ajax_request.js') }}"></script>
+    <script src="/js/ajax_request.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
