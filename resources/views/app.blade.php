@@ -52,10 +52,12 @@
                     <li><a href="{{ route('products_path') }}">Products</a></li>
 				</ul>
 
-                {!! Form::open(['url'=>'#', 'method'=>'GET', 'class'=>'navbar-form navbar-right']) !!}
-                {!! Form::input('search', 'q' ,'', ['class'=>'form-control', 'placeholder'=>'Search for products']) !!}
-                {!! Form::close() !!}
 				<ul class="nav navbar-nav navbar-right">
+                    <li>
+                        {!! Form::open(['url'=>'#', 'method'=>'GET', 'class'=>'navbar-form navbar-right']) !!}
+                        {!! Form::input('search', 'q' ,'', ['class'=>'form-control', 'placeholder'=>'Search...']) !!}
+                        {!! Form::close() !!}
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Cart<span class="caret"></span></a>

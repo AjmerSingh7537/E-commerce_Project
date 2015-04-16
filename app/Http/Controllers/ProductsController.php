@@ -114,14 +114,10 @@ class ProductsController extends Controller {
 	 */
 	public function show(Products $product)
 	{
-        $reviews = $this->getReviewsList($product);
+        $reviews = $product->reviews()->orderBy('created_at', 'dsc')->get();
         return view('product_details', ['product' => $product, 'reviews' => $reviews]);
 	}
 
-    private function getReviewsList($product)
-    {
-        return $product->reviews()->orderBy('created_at', 'dsc')->get();
-    }
 	/**
 	 * Show the form for editing the specified resource.
 	 *
