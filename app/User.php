@@ -42,6 +42,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasOne('App\Cart');
     }
 
+    public function type()
+    {
+        return $this->belongsTo('App\Users_type');
+    }
+
     public function is_admin()
     {
         if(Auth::user()->type_id === 2)

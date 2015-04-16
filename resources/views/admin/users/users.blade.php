@@ -33,11 +33,11 @@
                             @foreach($users as $index => $user)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $user['name'] }}</td>
-                                    <td>{{ $user['email'] }}</td>
-                                    <td>{{ $user['user_type'] }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->type->user_type }}</td>
                                     <td>
-                                        {!! delete_form(['delete_account', $user['id']]) !!}
+                                        {!! delete_form(['delete_account', $user->id]) !!}
                                     </td>
                                 </tr>
                             @endforeach

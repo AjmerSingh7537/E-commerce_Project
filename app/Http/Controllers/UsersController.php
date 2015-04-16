@@ -15,18 +15,9 @@ class UsersController extends Controller {
 	 */
 	public function index()
 	{
-        $users = $this->getUsersList();
+        $users = User::where('type_id', '<>', '2')->get();
 		return view('admin/users/users', ['users' => $users]);
 	}
-
-    private function getUsersList()
-    {
-        $users = User::join('users_type', 'users.type_id', '=', 'users_type.id')
-            ->select('users.name', 'users.email', 'users_type.user_type', 'users.id')
-            ->where('users.type_id', '<>', '2')
-            ->get()->toArray();
-        return $users;
-    }
 
 	/**
 	 * Show the form for creating a new resource.
