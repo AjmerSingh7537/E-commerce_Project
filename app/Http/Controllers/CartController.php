@@ -32,8 +32,6 @@ class CartController extends Controller {
 	 */
 	public function index()
 	{
-//        $items = Auth::user()->cart->cart_details()->join('products', 'products.id', '=', 'cart_details.product_id')->get();
-//        print_r($this->convertToArray($items));
         if(Auth::user() && Auth::user()->type_id !== 2) {
             $cart_id = Cart::firstOrCreate(['user_id' => Auth::id()])->toArray();
             $result = Auth::user()->cart->cart_details()->join('products', 'products.id', '=', 'cart_details.product_id')->get();
@@ -45,6 +43,12 @@ class CartController extends Controller {
         return view('cart', ['items' => $items]);
 	}
 
+    /**
+     * This function is used to convert result object into an array
+     *
+     * @param $items
+     * @return array
+     */
     private function convertToArray($items)
     {
         $result = array();
@@ -191,5 +195,16 @@ class CartController extends Controller {
             $this->session_cart->remove($id);
         return redirect()->route('show_cart');
 	}
+
+    public function emptyCart()
+    {
+        if(Auth::user()){
+            $cart_id = Auth::user()->cart->id;
+            Auth::user()->cart->cart_details()->where('cart_id', $cart_id)->delete();
+        }else{
+            $this->session_cart->destroy();
+        }
+        return redirect()->back();
+    }
 
 }

@@ -39,7 +39,11 @@
                                             {!! Form::close() !!}
                                         </div>
                                         <div class="col-lg-2 text-right">
-                                            <h4 id="{{ $item['rowid'] }}">{{ $item['subtotal'] }}</h4>
+                                            @if(Auth::user())
+                                                <h4 id="{{ $index }}">{{ $item['subtotal'] }}</h4>
+                                            @else
+                                                <h4 id="{{ $item['rowid'] }}">{{ $item['subtotal'] }}</h4>
+                                            @endif
                                         </div>
                                         <div class="col-md-12"><hr></div>
                                         <div class="col-md-10 h6">

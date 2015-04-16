@@ -60,8 +60,15 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Cart<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('#') }}"><span class="glyphicon glyphicon-trash"></span> Empty Cart</a></li>
-                            <li><a href="{{ url('/cart') }}"><span class="glyphicon glyphicon-eye-open"></span> View Cart</a></li>
+                            <li><a href="{{ url('/cart/emptyCart') }}"><span class="glyphicon glyphicon-trash"></span> Empty Cart</a></li>
+                            <li>
+                                <a href="{{ url('/cart') }}"><span class="glyphicon glyphicon-eye-open"></span>
+                                    View Cart
+                                    @if(!Auth::user())
+                                        <p class="pull-right">{{ \Gloudemans\Shoppingcart\Facades\Cart::count() }}</p>
+                                    @endif
+                                </a>
+                            </li>
                         </ul>
                     </li>
 					@if (Auth::guest())

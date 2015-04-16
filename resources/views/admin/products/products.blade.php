@@ -12,7 +12,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="min-width: 640px;">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     List of all the products
