@@ -60,8 +60,11 @@ Route::resource('reviews', 'ReviewsController', [
 ]);
 
 Route::resource('users', 'UsersController', [
-    'only' => ['index'],
-    'names' => ['index' => 'list_users']
+    'only' => ['index', 'update', 'destroy'],
+    'names' => [
+        'index' => 'list_users',
+        'destroy' => 'delete_account'
+    ]
 ]);
 
 Route::controllers([

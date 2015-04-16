@@ -21,7 +21,7 @@ class CategoriesController extends Controller {
 	 */
 	public function index()
 	{
-        if(Auth::user()->type_id === 2){
+        if(Auth::user() && Auth::user()->type_id === 2){
             $categories = $this->category->get();
             return view('admin/categories/categories', ['categories' => $categories]);
         }

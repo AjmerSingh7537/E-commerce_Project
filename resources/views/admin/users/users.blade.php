@@ -37,7 +37,7 @@
                                     <td>{{ $user['email'] }}</td>
                                     <td>{{ $user['user_type'] }}</td>
                                     <td>
-                                        {!! delete_form(['delete_product', $user['id']]) !!}
+                                        {!! delete_form(['delete_account', $user['id']]) !!}
                                     </td>
                                 </tr>
                             @endforeach

@@ -156,6 +156,7 @@ class CartController extends Controller {
 	public function update($id, CartRequest $request)
 	{
         $qty = $request->get('qty');
+        $result['rowid'] = $id;
         if(Auth::user()){
             $product = Products::where('id', $id)->first();
             Auth::user()->cart->cart_details()->where('product_id', $id)
@@ -165,9 +166,12 @@ class CartController extends Controller {
                         'quantity_price' => $qty * $product->price
                     ]);
             $this->updateCartsTotalBalance(Auth::user()->cart->id);
-        }else{
+        }else {
             $this->session_cart->update($id, $qty);
+            $sessionObj = $this->session_cart->get($id);
+            $result['subtotal'] = $sessionObj['subtotal'];
         }
+        if($request->ajax()) return $result;
         return redirect()->back();
 	}
 

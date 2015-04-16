@@ -24,16 +24,8 @@ class UsersController extends Controller {
         $users = User::join('users_type', 'users.type_id', '=', 'users_type.id')
             ->select('users.name', 'users.email', 'users_type.user_type', 'users.id')
             ->where('users.type_id', '<>', '2')
-            ->get();
-        $result = array();
-        // The following foreach is used to reformat the array that I got from the above query
-        foreach($users as $index => $user){
-            $result[$index]['name'] = $user['name'];
-            $result[$index]['email'] = $user['email'];
-            $result[$index]['user_type'] = $user['user_type'];
-            $result[$index]['id'] = $user['id'];
-        }
-        return $result;
+            ->get()->toArray();
+        return $users;
     }
 
 	/**
@@ -97,7 +89,8 @@ class UsersController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+        User::where('id', $id)->delete();
+        return redirect()->back();
 	}
 
 }

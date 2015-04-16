@@ -20,6 +20,7 @@
                             </div>
                         @else
                             <div class="container-fluid">
+                                @foreach($items as $index => $item)
                                 <div class="col-md-12">
                                     <div class="col-md-2">
                                         <img src="img/products/{{ $item['options']['image'] }}" style="width:170px;height: 100px;">
@@ -32,13 +33,13 @@
                                             <h4>{{ $item['price'] }}</h4>
                                         </div>
                                         <div class="col-md-2 text-right">
-                                            {!! Form::open(['route' => ['update_cart', $index], 'method' => 'PATCH']) !!}
+                                            {!! Form::open(['data-remote', 'method' => 'PATCH', 'route' => ['update_cart', $index]]) !!}
                                             {!! Form::input('number', 'qty', $item['qty'],
                                             ['class' => 'form-control text-center', 'min' => 1, 'style' => 'width: 40px;']) !!}
                                             {!! Form::close() !!}
                                         </div>
                                         <div class="col-lg-2 text-right">
-                                            <h4>{{ $item['subtotal'] }}</h4>
+                                            <h4 id="{{ $item['rowid'] }}">{{ $item['subtotal'] }}</h4>
                                         </div>
                                         <div class="col-md-12"><hr></div>
                                         <div class="col-md-10 h6">
@@ -53,6 +54,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12"><hr></div>
+                                @endforeach
                                 <div class="col-md-12">
                                     <div class="col-md-2 col-md-offset-10 pull-right">
                                     <p>Cart Subtotal: {{ Session::get('subtotal') }}</p>
