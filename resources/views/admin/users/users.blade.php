@@ -35,7 +35,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->type->user_type }}</td>
+                                    <td>{{ ucfirst($user->type->user_type) }}</td>
                                     <td>
                                         {!! delete_form(['delete_account', $user->id]) !!}
                                     </td>
