@@ -46,8 +46,8 @@
                                             @endif
                                         </div>
                                         <div class="col-md-12"><hr></div>
-                                        <div class="col-md-10 h6">
-                                            Availability: In stock
+                                        <div class="col-md-10 h5">
+                                            Availability: <small>In stock</small>
                                         </div>
                                         <div class="col-md-2 text-right">
                                             {!! delete_form(['delete_item', $index]) !!}
@@ -60,18 +60,28 @@
                                 <div class="col-md-12"><hr></div>
                                 @endforeach
                                 <div class="col-md-12">
-                                    <div class="col-md-2 col-md-offset-10 pull-right">
-                                    <p>Cart Subtotal: {{ Session::get('subtotal') }}</p>
-                                    <p>Estimated Tax: </p>
-                                    <p>Total: </p>
+                                    <div class="col-md-11 text-right">
+                                        <label class="control-label">Cart Subtotal:</label>
                                     </div>
-                                    <hr class="col-md-12">
+                                    <div class="col-md-1 text-right">
+                                        <p class="form-control-static">{{ Session::get('subtotal') }}</p>
+                                    </div>
+
+                                    {{--<div class="col-md-2 col-md-offset-10 pull-right">--}}
+                                    {{--<p>Cart Subtotal: {{ Session::get('subtotal') }}</p>--}}
+                                    {{--<p>Estimated Tax: </p>--}}
+                                    {{--<p>Total: </p>--}}
+                                    {{--</div>--}}
+                                    {{--<hr class="col-md-12">--}}
                                 </div>
                                 <div class="list-inline">
-                                    <li><a href="{{ route('products_path') }}" class="btn btn-success"><span class="glyphicon glyphicon-home"></span> Continue Shopping</a></li>
+                                    <li><a href="{{ route('products_path') }}" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Continue Shopping</a></li>
                                     @if(!Auth::user())
-                                        <li><a href="{{ url('auth/login') }}" class="btn btn-success"><span class="glyphicon glyphicon-save"></span> Save Cart</a></li>
+                                        <li><a href="{{ url('auth/login') }}" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> Save Cart</a></li>
                                     @endif
+                                    <div class="pull-right">
+                                        <li><a href="#" class="btn btn-success"><span class="glyphicon glyphicon-check"></span> Checkout</a></li>
+                                    </div>
                                 </div>
                             </div>
                         @endif

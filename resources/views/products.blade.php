@@ -6,6 +6,16 @@
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
                 <div class="caption col-lg-12">
+                    {{--<div class="col-md-4 pull-right h1">--}}
+                        {{--<select class="form-control">--}}
+                            {{--<option>category_name1</option>--}}
+                            {{--<option>category_name2</option>--}}
+                            {{--<option>category_name3</option>--}}
+                        {{--</select>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-4">--}}
+                        {{--<h1>List of Products</h1>--}}
+                    {{--</div>--}}
                     <h1>List of Products</h1>
                 </div>
 

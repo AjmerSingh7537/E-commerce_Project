@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller {
 
@@ -58,7 +59,8 @@ class UsersController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$asd = User::where('id', $id)->get()->toArray();
+        return view('/users/edit_profile');
 	}
 
 	/**

@@ -77,7 +77,11 @@ class CartController extends Controller {
             $this->storeCartDetails($cartObj, $product);
         }
         else
-            $this->session_cart->add($product->id, $product->product_name, 1, $product->price, ['image' => $product->image, 'description' => $product->description]);
+            $this->session_cart->add($product->id, $product->product_name, 1, $product->price,
+                [
+                    'image' => $product->image,
+                    'description' => $product->description
+                ]);
         return redirect()->route('show_cart');
 	}
 
@@ -198,12 +202,10 @@ class CartController extends Controller {
 
     public function emptyCart()
     {
-        if(Auth::user()){
-            $cart_id = Auth::user()->cart->id;
-            Auth::user()->cart->cart_details()->where('cart_id', $cart_id)->delete();
-        }else{
+        if(Auth::user())
+            Auth::user()->cart->cart_details()->delete();
+        else
             $this->session_cart->destroy();
-        }
         return redirect()->back();
     }
 
