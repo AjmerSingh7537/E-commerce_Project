@@ -5,18 +5,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
-                <div class="caption col-lg-12">
-                    {{--<div class="col-md-4 pull-right h1">--}}
-                        {{--<select class="form-control">--}}
-                            {{--<option>category_name1</option>--}}
-                            {{--<option>category_name2</option>--}}
-                            {{--<option>category_name3</option>--}}
-                        {{--</select>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-md-4">--}}
-                        {{--<h1>List of Products</h1>--}}
-                    {{--</div>--}}
+                <div class="caption col-md-12">
+                    <h1 class="col-md-3 col-sm-3 pull-right">
+                        <select class="form-control">
+                            <option>category_name1</option>
+                            <option>category_name2</option>
+                            <option>category_name3</option>
+                        </select>
+                    </h1>
                     <h1>List of Products</h1>
+
                 </div>
 
                 @foreach($products as $product)
