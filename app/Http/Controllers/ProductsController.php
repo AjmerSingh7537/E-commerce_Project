@@ -4,6 +4,7 @@ use App\Categories;
 use App\Http\Requests;
 use App\Http\Requests\AddProductRequest;
 use App\Products;
+use Illuminate\Http\Request;
 
 class ProductsController extends Controller {
 
@@ -16,7 +17,7 @@ class ProductsController extends Controller {
     {
         $this->product = $product;
         $this->middleware('admin', ['only' => ['create', 'edit']]);
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'sortByCategory']]);
     }
 	/**
 	 * Display a listing of the resource.
@@ -25,7 +26,7 @@ class ProductsController extends Controller {
 	 */
 	public function index()
 	{
-		return view('products', ['products' => $this->product->get()]);
+		return view('products', ['products' => $this->product->get(), 'categories' => $this->categoryList()]);
 	}
 
 	/**
@@ -51,6 +52,21 @@ class ProductsController extends Controller {
             $categories[$category->id] = $category->category_name;
         }
         return $categories;
+    }
+
+    public function sortByCategory(Request $request)
+    {
+        $selectedCategory = $request->get('category');
+        $products = Products::where('category_id', $selectedCategory)->get()->toJson();
+        if($request->ajax()){
+            return $products;
+        }
+        return redirect()->back();
+    }
+
+    public function search()
+    {
+
     }
 
 	/**

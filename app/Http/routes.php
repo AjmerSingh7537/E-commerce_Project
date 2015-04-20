@@ -22,6 +22,10 @@ Route::get('home', 'HomeController@index');
 
 Route::get('cart/emptyCart', 'CartController@emptyCart');
 
+Route::post('sortByCategory', 'ProductsController@sortByCategory');
+
+Route::get('search', 'ProductsController@search');
+
 Route::resource('products', 'ProductsController', [
     'names' => [
         'index' => 'products_path',

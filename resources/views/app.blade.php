@@ -7,11 +7,12 @@
 	<title>Laravel</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">--}}
 
     <!-- The following links are used for the rating stars -->
     <link rel="stylesheet" href="{{ asset('/css/star-rating.css') }}" media="all" rel="stylesheet" type="text/css"/>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    {{--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>--}}
+    <script src="/js/jquery.js"></script>
     <script src="{{ asset('/js/star-rating.js') }}" type="text/javascript"></script>
 
     <!-- CSS for the application -->
@@ -54,7 +55,7 @@
 
 				<ul class="nav navbar-nav navbar-right">
                     <li>
-                        {!! Form::open(['url'=>'#', 'method'=>'GET', 'class'=>'navbar-form navbar-right']) !!}
+                        {!! Form::open(['searchForm', 'url'=>'#', 'method'=>'GET', 'class'=>'navbar-form navbar-right']) !!}
                         {!! Form::input('search', 'q' ,'', ['class'=>'form-control', 'placeholder'=>'Search...']) !!}
                         {!! Form::close() !!}
                     </li>
@@ -93,6 +94,7 @@
 	</nav>
         @yield('content')
     <script src="/js/ajax_request.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+	{{--<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>--}}
 </body>
 </html>

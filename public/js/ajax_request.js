@@ -27,3 +27,30 @@ $(document).ready(function () {
 
 })();
 
+(function () {
+    $('form[selectedCategory]').on('change', function (e) {
+        var form = $(this);
+        var method = form.find('input[name="_method"]').val() || 'POST';
+        var url = form.prop('action');
+
+        $.ajax({
+            type: method,
+            url: url,
+            data: form.serialize(),
+
+            success: function (response) {
+                object = JSON.parse(response);
+                $.each(object, function(key, value){
+                    $('#testing').html(
+                        "<div class='col-sm-6 col-lg-3 col-md-4'>" +
+                        value.product_name +
+                        "</div>"
+                    );
+                });
+            }
+        });
+        e.preventDefault();
+    });
+
+})();
+

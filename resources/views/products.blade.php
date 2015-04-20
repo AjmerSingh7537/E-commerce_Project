@@ -7,16 +7,13 @@
             <div class="col-md-12 col-md-offset-0">
                 <div class="caption col-md-12">
                     <h1 class="col-md-3 col-sm-3 pull-right">
-                        <select class="form-control">
-                            <option>category_name1</option>
-                            <option>category_name2</option>
-                            <option>category_name3</option>
-                        </select>
+                        {!! Form::open(['selectedCategory', 'url' => 'sortByCategory', 'id' => 'selectedCategory']) !!}
+                        {!! Form::select('category', $categories, null, ['class' => 'form-control', 'id' => 'category']) !!}
+                        {!! Form::close() !!}
                     </h1>
                     <h1>List of Products</h1>
-
                 </div>
-
+                <div id="testing">
                 @foreach($products as $product)
                     <div class="col-sm-6 col-lg-3 col-md-4">
                         <div class="thumbnail">
@@ -44,12 +41,6 @@
                         </div>
                     </div>
                 @endforeach
-
-                <div class="col-sm-6 col-lg-3 col-md-4">
-                    <h4><a href="#">Like this template?</a>
-                    </h4>
-                    <p>If you like this template, then check out <a target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this tutorial</a> on how to build a working review system for your online store!</p>
-                    <a class="btn btn-primary" target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">View Tutorial</a>
                 </div>
             </div>
         </div>
