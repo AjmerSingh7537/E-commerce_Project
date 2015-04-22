@@ -6,26 +6,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Laravel</title>
 
-    <!-- Latest compiled and minified CSS -->
-    {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">--}}
+    {!! Html::style('/css/star-rating.css') !!}
+    {!! Html::style('/css/app.css') !!}
+    {!! Html::style('/css/bootstrap.min.css') !!}
+    {!! Html::style('/css/carousel.css') !!}
 
-    <!-- The following links are used for the rating stars -->
-    <link rel="stylesheet" href="{{ asset('/css/star-rating.css') }}" media="all" rel="stylesheet" type="text/css"/>
-    {{--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>--}}
-    <script src="/js/jquery.js"></script>
-    <script src="{{ asset('/js/star-rating.js') }}" type="text/javascript"></script>
-
-    <!-- CSS for the application -->
-	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-
-    <!-- Bootstrap Core CSS -->
-    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- Carousel CSS -->
-    <link href="{{ asset('css/carousel.css') }}" rel="stylesheet">
-
-	<!-- Fonts -->
-	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    {!! Html::script('/js/jquery.js') !!}
+    {!! Html::script('/js/star-rating.js') !!}
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -68,7 +55,7 @@
                                 <a href="{{ url('/cart') }}"><span class="glyphicon glyphicon-eye-open"></span>
                                     View Cart
                                     @if(!Auth::user())
-                                        <p class="pull-right">{{ \Gloudemans\Shoppingcart\Facades\Cart::count() }}</p>
+                                        <p class="pull-right">{{ Cart::count() }}</p>
                                     @endif
                                 </a>
                             </li>
@@ -81,7 +68,7 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{ Auth::user()->name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ route('edit_profile', Auth::id()) }}"><span class="glyphicon glyphicon-user"></span> User Profile</a></li>
+                                <li><a href="{{ route('edit_profile', Auth::id()) }}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                                 <li><a href="{{ url('#') }}"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{{ url('/auth/logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -93,8 +80,7 @@
 		</div>
 	</nav>
         @yield('content')
-    <script src="/js/ajax_request.js"></script>
-    <script src=""></script>
-	{{--<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>--}}
+    {!! Html::script('/js/ajax_request.js') !!}
+    {!! Html::script('/js/bootstrap.min.js') !!}
 </body>
 </html>

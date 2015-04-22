@@ -197,6 +197,7 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
         'Form'      => 'Illuminate\Html\FormFacade',
+        'Html'      => 'Illuminate\Html\HtmlFacade',
         'Cart'      => 'Gloudemans\Shoppingcart\Facades\Cart',
         'Flash'     => 'Laracasts\Flash\Flash',
         'Image'     => 'Intervention\Image\ImageServiceProvider',

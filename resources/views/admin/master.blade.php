@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,23 +13,11 @@
     <!-- Font awesome css -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
-    <!-- Bootstrap Core CSS -->
-    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="{{ asset('/admin/css/metisMenu.min.css') }}" rel="stylesheet">
-
-    <!-- DataTables CSS -->
-    <link href="{{ asset('/admin/css/dataTables.bootstrap.css') }}" rel="stylesheet">
-
-    <!-- DataTables Responsive CSS -->
-    <link href="{{ asset('/admin/css/dataTables.responsive.css') }}" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="{{ asset('/admin/css/sb-admin-2.css') }}" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="{{ asset('/admin/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    {!! Html::style('/css/bootstrap.min.css') !!}
+    {!! Html::style('/admin/css/metisMenu.min.css') !!}
+    {!! Html::style('/admin/css/dataTables.bootstrap.css') !!}
+    {!! Html::style('/admin/css/dataTables.responsive.css') !!}
+    {!! Html::style('/admin/css/sb-admin-2.css') !!}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,7 +31,6 @@
 <body>
 
 <div id="wrapper">
-
     <!-- Navigation -->
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="navbar-header">
@@ -59,83 +45,12 @@
         <!-- /.navbar-header -->
 
         <ul class="nav navbar-top-links navbar-right">
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span class="glyphicon glyphicon-envelope"></span>  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu dropdown-messages">
-                    <li>
-                        <a href="#">
-                            <div>
-                                <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                            </div>
-                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-messages -->
-            </li>
-            <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span class="glyphicon glyphicon-tasks"></span>  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu dropdown-tasks">
-                    <li>
-                        <a href="#">
-                            <div>
-                                <p>
-                                    <strong>Task 1</strong>
-                                    <span class="pull-right text-muted">40% Complete</span>
-                                </p>
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                        <span class="sr-only">40% Complete (success)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-tasks -->
-            </li>
-            <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span class="glyphicon glyphicon-bell"></span>  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu dropdown-alerts">
-                    <li>
-                        <a href="#">
-                            <div>
-                                <span class="glyphicon glyphicon-comment"></span> New Comment
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-alerts -->
-            </li>
-            <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    <span class="glyphicon glyphicon-user"></span>  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> User Profile</a>
-                    </li>
-                    <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="{{ url('/auth/logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-user -->
-            </li>
-            <!-- /.dropdown -->
+            <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Messages"><span class="glyphicon glyphicon-envelope"></span></a></li>
+            <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Tasks"><span class="glyphicon glyphicon-tasks"></span></a></li>
+            <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Notifications"><span class="glyphicon glyphicon-bell"></span></a></li>
+            <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Profile"><span class="glyphicon glyphicon-user"></span></a></li>
+            <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Settings"><span class="glyphicon glyphicon-cog"></span></a></li>
+            <li><a href="{{ url('/auth/logout') }}" data-toggle="tooltip" data-placement="bottom" title="Logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
         </ul>
         <!-- /.navbar-top-links -->
 
@@ -153,15 +68,9 @@
                         </div>
                         <!-- /input-group -->
                     </li>
-                    <li>
-                        <a href="/home">Products</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('categories') }}">Categories</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('list_users') }}">Users</a>
-                    </li>
+                    <li><a href="{{ url('/home') }}">Products</a></li>
+                    <li><a href="{{ route('categories') }}">Categories</a></li>
+                    <li><a href="{{ route('list_users') }}">Users</a></li>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
@@ -174,20 +83,14 @@
 </div>
 
 <!-- Scripts -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+{!! Html::script('/js/jquery.js') !!}
+{!! Html::script('/js/bootstrap.min.js') !!}
+{!! Html::script('/admin/js/metisMenu.min.js') !!}
+{!! Html::script('/admin/js/jquery.dataTables.min.js') !!}
+{!! Html::script('/admin/js/dataTables.bootstrap.min.js') !!}
+{!! Html::script('/admin/js/sb-admin-2.js') !!}
 
-<!-- Metis Menu Plugin JavaScript -->
-<script src="{{ asset('/admin/js/metisMenu.min.js') }}"></script>
-
-<!-- DataTables JavaScript -->
-<script src="{{ asset('/admin/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('/admin/js/dataTables.bootstrap.min.js') }}"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="{{ asset('/admin/js/sb-admin-2.js') }}"></script>
-
-<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<!-- The following code will be put in a JS file -->
 <script>
     $(document).ready(function() {
         $('#dataTables-example').DataTable({
@@ -198,6 +101,7 @@
             responsive: true,
             "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [4] }]
         });
+        $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
 
