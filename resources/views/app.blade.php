@@ -55,7 +55,7 @@
 
 				<ul class="nav navbar-nav navbar-right">
                     <li>
-                        {!! Form::open(['searchForm', 'url'=>'#', 'method'=>'GET', 'class'=>'navbar-form navbar-right']) !!}
+                        {!! Form::open(['url'=>'#', 'method'=>'GET', 'class'=>'navbar-form navbar-right']) !!}
                         {!! Form::input('search', 'q' ,'', ['class'=>'form-control', 'placeholder'=>'Search...']) !!}
                         {!! Form::close() !!}
                     </li>
@@ -94,7 +94,7 @@
 	</nav>
         @yield('content')
     <script src="/js/ajax_request.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src=""></script>
 	{{--<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>--}}
 </body>
 </html>

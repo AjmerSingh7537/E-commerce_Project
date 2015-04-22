@@ -86,4 +86,9 @@ class UsersController extends Controller {
         return redirect()->back();
 	}
 
+    public function banOrUnban($id)
+    {
+
+    }
+
 }

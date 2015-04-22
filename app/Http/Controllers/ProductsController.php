@@ -40,7 +40,7 @@ class ProductsController extends Controller {
 	}
 
     /**
-     * Returns an array containing all the categories
+     * Returns an array containing all the categories names
      *
      * @return array
      */
@@ -54,19 +54,24 @@ class ProductsController extends Controller {
         return $categories;
     }
 
+    /**
+     * Returns the list of products(JSON) in a specific category
+     *
+     * @param Request $request
+     * @return string
+     */
     public function sortByCategory(Request $request)
     {
         $selectedCategory = $request->get('category');
-        $products = Products::where('category_id', $selectedCategory)->get()->toJson();
-        if($request->ajax()){
-            return $products;
-        }
-        return redirect()->back();
+
+        if($selectedCategory == "0") $products = Products::all()->toJson();
+        else $products = Products::where('category_id', $selectedCategory)->get()->toJson();
+        if($request->ajax()) return $products;
     }
 
     public function search()
     {
-
+        //
     }
 
 	/**
@@ -172,7 +177,7 @@ class ProductsController extends Controller {
         $product->delete();
         if($filename !== 'default.jpg')
             unlink('img/products/' . $filename);
-        return redirect('home'); //this is where all the products are listed for the admin
+        return redirect()->back();
 	}
 
 }

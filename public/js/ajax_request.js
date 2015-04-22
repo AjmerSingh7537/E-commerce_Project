@@ -40,17 +40,41 @@ $(document).ready(function () {
 
             success: function (response) {
                 object = JSON.parse(response);
-                $.each(object, function(key, value){
-                    $('#testing').html(
+                $('#testing').html("");
+                $.each(object, function (key, value) {
+                    $('#testing').append(
                         "<div class='col-sm-6 col-lg-3 col-md-4'>" +
-                        value.product_name +
-                        "</div>"
-                    );
+                            "<div class='thumbnail'>" +
+                                "<img src='img/products/" + value.image + "' alt=''>" +
+                                "<div class='caption'>" +
+                                    "<h4 class='pull-right'>" + value.price + "</h4>" +
+                                    "<h4><a href='products/" + value.slug + "'>" + value.product_name + "</a>" + "</h4>" +
+                                    "<p>" + value.description + "</p>" +
+                                "</div>" +
+                                "<div class='ratings'>" +
+                                    "<p class='pull-right'>" + value.rating_count + " reviews</p>" +
+                                    "<p>" +
+                                        getRating(value.rating_cache) +
+                                    "</p>" +
+                                "</div>" +
+                            "</div>" +
+                        "</div>");
                 });
             }
         });
         e.preventDefault();
     });
+
+    function getRating(num){
+        var test = "";
+        for (var i = 0; i < num; i++) {
+            test += "<span class='glyphicon glyphicon-star'></span>";
+        }
+        for (var i = 0; i < 5-num; i++){
+            test += "<span class='glyphicon glyphicon-star-empty'></span>";
+        }
+        return test;
+    }
 
 })();
 
