@@ -68,9 +68,9 @@
                         </div>
                         <!-- /input-group -->
                     </li>
-                    <li><a href="{{ url('/home') }}">Products</a></li>
-                    <li><a href="{{ route('categories') }}">Categories</a></li>
-                    <li><a href="{{ route('list_users') }}">Users</a></li>
+                    <li><a data-pjax="#main" href="{{ url('/home') }}">Products</a></li>
+                    <li><a data-pjax="#main" href="{{ route('categories') }}">Categories</a></li>
+                    <li><a data-pjax="#main" href="{{ route('list_users') }}">Users</a></li>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
@@ -78,7 +78,9 @@
         <!-- /.navbar-static-side -->
     </nav>
     <div id="page-wrapper">
-        @yield('content')
+        <div id="main">
+            @yield('content')
+        </div>
     </div>
 </div>
 
@@ -89,10 +91,24 @@
 {!! Html::script('/admin/js/jquery.dataTables.min.js') !!}
 {!! Html::script('/admin/js/dataTables.bootstrap.min.js') !!}
 {!! Html::script('/admin/js/sb-admin-2.js') !!}
+{!! Html::script('/js/jquery.pjax.js') !!}
 
 <!-- The following code will be put in a JS file -->
 <script>
     $(document).ready(function() {
+        $(document).on('pjax:end', function(){
+            loadDataTable();
+        });
+        loadDataTable();
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $(function() {
+            $(document).pjax('.nav li a');
+        });
+    });
+
+    function loadDataTable(){
         $('#dataTables-example').DataTable({
             responsive: true,
             "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [1, 6] }]
@@ -101,8 +117,7 @@
             responsive: true,
             "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [4] }]
         });
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+    }
 </script>
 
 </body>

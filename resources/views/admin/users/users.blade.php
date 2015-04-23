@@ -38,9 +38,6 @@
                                     <td>{{ ucfirst($user->type->user_type) }}</td>
                                     <td>
                                         {!! delete_form(['delete_account', $user->id]) !!}
-                                        {!! Form::open(['url' => '#']) !!}
-                                        <button class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-plus-sign"></span> Ban or Unban</button>
-                                        {!! Form::close() !!}
                                     </td>
                                 </tr>
                             @endforeach
