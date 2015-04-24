@@ -66,13 +66,6 @@
                                     <div class="col-md-1 text-right">
                                         <p class="form-control-static">{{ Session::get('subtotal') }}</p>
                                     </div>
-
-                                    {{--<div class="col-md-2 col-md-offset-10 pull-right">--}}
-                                    {{--<p>Cart Subtotal: {{ Session::get('subtotal') }}</p>--}}
-                                    {{--<p>Estimated Tax: </p>--}}
-                                    {{--<p>Total: </p>--}}
-                                    {{--</div>--}}
-                                    {{--<hr class="col-md-12">--}}
                                 </div>
                                 <div class="list-inline">
                                     <li><a href="{{ route('products_path') }}" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Continue Shopping</a></li>

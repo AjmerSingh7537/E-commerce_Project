@@ -24,7 +24,7 @@ class ReviewsController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		return view('admin/users_reviews/users_reviews', ['reviews' => $this->reviews->all()]);
 	}
 
 	/**
@@ -51,16 +51,16 @@ class ReviewsController extends Controller {
         $review->user()->associate(Auth::user());
         $review->product()->associate($product);
         $review->save();
-        $this->updateRatingCount($product);
+        $this->updateRatingCount($product->id);
         return redirect()->back();
 	}
 
-    private function updateRatingCount($product)
+    private function updateRatingCount($product_id)
     {
-        DB::table('products')->where('id', $product->id)
+        DB::table('products')->where('id', $product_id)
             ->update([
-                'rating_count' => DB::table('reviews')->where('product_id', $product->id)->count(),
-                'rating_cache' => DB::table('reviews')->where('product_id', $product->id)->avg('ratings')
+                'rating_count' => DB::table('reviews')->where('product_id', $product_id)->count(),
+                'rating_cache' => DB::table('reviews')->where('product_id', $product_id)->avg('ratings')
             ]);
     }
 
@@ -105,7 +105,11 @@ class ReviewsController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+        $review = $this->reviews->where('id', $id)->first();
+        $product_id = $review->product_id;
+		$review->delete();
+        $this->updateRatingCount($product_id);
+        return redirect()->back();
 	}
 
 }

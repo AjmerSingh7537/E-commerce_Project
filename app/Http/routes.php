@@ -61,7 +61,8 @@ Route::resource('cart', 'CartController', [
 Route::resource('reviews', 'ReviewsController', [
     'names' => [
         'store' => 'store_review',
-        'destroy' => 'delete_review'
+        'destroy' => 'delete_review',
+        'index' => 'get_users_reviews'
     ]
 ]);
 

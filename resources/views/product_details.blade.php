@@ -48,7 +48,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 @for ($i=1; $i <= 5 ; $i++)
-                                    <span class="glyphicon glyphicon-star{{ ($i <= $review->ratings) ? '' : '-empty'}}"></span>
+                                    <span class="glyphicon glyphicon-star{{ ($i <= round($review->ratings)) ? '' : '-empty'}}"></span>
                                 @endfor
                                 {{ $review->user->name }}
                                 <span class="pull-right">{{ \Carbon\Carbon::createFromTimeStamp(strtotime($review->created_at))->diffForHumans() }}</span>

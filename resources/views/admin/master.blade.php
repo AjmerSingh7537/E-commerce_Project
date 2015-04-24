@@ -71,6 +71,7 @@
                     <li><a data-pjax="#main" href="{{ url('/home') }}">Products</a></li>
                     <li><a data-pjax="#main" href="{{ route('categories') }}">Categories</a></li>
                     <li><a data-pjax="#main" href="{{ route('list_users') }}">Users</a></li>
+                    <li><a data-pjax="#main" href="{{ route('get_users_reviews') }}">Reviews</a></li>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
@@ -116,6 +117,10 @@
         $('#sort_users').DataTable({
             responsive: true,
             "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [4] }]
+        });
+        $('#users_reviews').DataTable({
+            responsive: true,
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [6] }]
         });
     }
 </script>

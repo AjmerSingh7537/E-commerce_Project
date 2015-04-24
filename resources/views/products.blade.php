@@ -28,7 +28,7 @@
                                 <p class="pull-right">{{ $product->rating_count }} reviews</p>
                                 <p>
                                     @for ($i=1; $i <= 5 ; $i++)
-                                        <span class="glyphicon glyphicon-star{{ ($i <= $product->rating_cache) ? '' : '-empty'}}"></span>
+                                        <span class="glyphicon glyphicon-star{{ ($i <= round($product->rating_cache)) ? '' : '-empty'}}"></span>
                                     @endfor
                                 </p>
                             </div>
