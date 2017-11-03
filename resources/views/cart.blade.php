@@ -64,7 +64,8 @@
                                         <label class="control-label">Cart Subtotal:</label>
                                     </div>
                                     <div class="col-md-1 text-right">
-                                        <p class="form-control-static">{{ Session::get('subtotal') }}</p>
+                                        <p id="total" class="form-control-static">{{ Session::get('subtotal') }}</p>
+                                        <p id="total123" class="form-control-static"></p>
                                     </div>
                                 </div>
                                 <div class="list-inline">

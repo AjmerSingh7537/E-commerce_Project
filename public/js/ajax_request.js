@@ -20,6 +20,7 @@ $(document).ready(function () {
 
             success: function (response) {
                 $('#' + response.rowid).html(response.subtotal);
+                $('#total').html(response.total);
             }
         });
         e.preventDefault();
@@ -77,4 +78,3 @@ $(document).ready(function () {
     }
 
 })();
-

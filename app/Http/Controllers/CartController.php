@@ -174,10 +174,14 @@ class CartController extends Controller {
                         'quantity_price' => $qty * $product->price
                     ]);
             $this->updateCartsTotalBalance(Auth::user()->cart->id);
+            $this->calculateSubtotal();
+            $result['subtotal'] = $qty * $product->price;
+            $result['total'] = Auth::user()->cart->total_balance;
         }else {
             $this->session_cart->update($id, $qty);
             $sessionObj = $this->session_cart->get($id);
             $result['subtotal'] = $sessionObj['subtotal'];
+            $result['total'] = $this->session_cart->total();
         }
         if($request->ajax()) return $result;
         return redirect()->back();
